@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-stahl-dark: #050505;
+  --color-stahl-cyan: #3b82f6;
+  --color-stahl-accent: #3b82f6;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+}
+
+@layer base {
+  body {
+    @apply bg-stahl-dark text-white antialiased;
+  }
+}
+
+.massive-heading {
+  @apply text-[12vw] md:text-[112px] leading-[0.9] font-black tracking-[-0.04em] uppercase;
+}
+
+.micro-label {
+  @apply text-[12px] uppercase tracking-[0.15em] font-medium text-text-secondary;
+}
+
+.tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.btn-bold {
+  @apply px-10 py-5 bg-stahl-cyan text-white font-black uppercase tracking-wider rounded-none hover:bg-white hover:text-stahl-dark transition-all duration-300;
+}
+
+.link-bold {
+  @apply font-bold underline underline-offset-8 decoration-2 hover:text-stahl-cyan transition-colors;
+}
