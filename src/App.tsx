@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { 
   Code2, 
   Cloud, 
@@ -626,6 +627,7 @@ export default function App() {
       <Footer />
       <BudgetModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
