@@ -150,7 +150,7 @@ const Hero = ({ onOpenForm }: { onOpenForm: () => void }) => (
     <div className="absolute bottom-0 right-0 p-12 hidden lg:block">
       <div className="flex gap-20 border-t border-white/10 pt-10">
         <div className="flex flex-col">
-          <span className="text-3xl font-black">10+</span>
+          <span className="text-3xl font-black">5+</span>
           <span className="micro-label">Projetos</span>
         </div>
         <div className="flex flex-col">
@@ -171,7 +171,7 @@ const Services = () => {
     },
     {
       icon: <Monitor className="w-8 h-8" />,
-      title: "Manutenção de PCs",
+      title: "Manutenção de Computadores",
       desc: "Serviços especializados de formatação, limpeza preventiva, upgrade de hardware e otimização de sistema."
     },
     {
