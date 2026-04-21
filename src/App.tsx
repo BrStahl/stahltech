@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import { 
   Code2, 
   Cloud, 
@@ -150,7 +148,7 @@ const Hero = ({ onOpenForm }: { onOpenForm: () => void }) => (
     <div className="absolute bottom-0 right-0 p-12 hidden lg:block">
       <div className="flex gap-20 border-t border-white/10 pt-10">
         <div className="flex flex-col">
-          <span className="text-3xl font-black">5+</span>
+          <span className="text-3xl font-black">10+</span>
           <span className="micro-label">Projetos</span>
         </div>
         <div className="flex flex-col">
@@ -171,7 +169,7 @@ const Services = () => {
     },
     {
       icon: <Monitor className="w-8 h-8" />,
-      title: "Manutenção de Computadores",
+      title: "Manutenção de PCs",
       desc: "Serviços especializados de formatação, limpeza preventiva, upgrade de hardware e otimização de sistema."
     },
     {
@@ -215,7 +213,7 @@ const Portfolio = () => {
     {
       title: "Stahl Tech Web",
       category: "Professional Services",
-      image: "https://picsum.photos/seed/tech/800/600",
+      image: "/portfolio-stahl.png",
       desc: "Site institucional focado em serviços de TI e Web Design com identidate visual de alto impacto.",
       url: "#",
       features: "Personalizado, Otimizado, Formulários"
@@ -223,7 +221,7 @@ const Portfolio = () => {
     {
       title: "Michele Braz",
       category: "Saúde & Bem-estar",
-      image: "https://picsum.photos/seed/care/800/600",
+      image: "/portfolio-michele.png",
       desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
       url: "https://psicomichelebraz.vercel.app/",
       features: "Suave, Responsivo, Agendamento"
@@ -231,7 +229,7 @@ const Portfolio = () => {
     {
       title: "Athom Academia",
       category: "Fitness & Esporte",
-      image: "https://picsum.photos/seed/gym/800/600",
+      image: "/portfolio-athom.png",
       desc: "Plataforma focada em conversão e engajamento para uma academia moderna.",
       url: "https://athom-academia-838260676759.us-west1.run.app/",
       features: "Dinâmico, CTA Forte, Performance"
@@ -239,11 +237,14 @@ const Portfolio = () => {
   ];
 
   return (
-    <section id="portfolio" className="py-32 bg-stahl-dark border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="portfolio" className="py-32 bg-stahl-deep border-y border-white/5 relative overflow-hidden">
+      {/* Subtle glow effect */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-stahl-cyan/5 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-10">
           <div>
-            <div className="micro-label mb-4">Projetos Recentes</div>
+            <div className="micro-label mb-4 text-stahl-cyan">Projetos Recentes</div>
             <h2 className="text-5xl font-black uppercase tracking-tighter">Serviços Realizados</h2>
             <p className="mt-6 text-white/40 max-w-xl">
               Criação de layout personalizado, integração com formulários de contato e otimização de performance para diversos setores.
@@ -256,39 +257,63 @@ const Portfolio = () => {
             <motion.div
               key={i}
               whileHover={{ y: -10 }}
-              className="group bg-white/5 border border-white/10 overflow-hidden"
+              className="group bg-stahl-dark/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-stahl-cyan/30 transition-colors"
             >
-              <div className="relative aspect-video overflow-hidden">
-                <img 
-                  src={p.image} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" 
-                  alt={p.title}
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-stahl-dark/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <a 
-                    href={p.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="p-4 bg-stahl-cyan text-white rounded-full hover:scale-110 transition-transform"
-                  >
-                    <ExternalLink className="w-6 h-6" />
-                  </a>
-                </div>
+              <div className="relative aspect-video overflow-hidden bg-white/5 flex items-center justify-center">
+                <a 
+                  href={p.url === '#' ? undefined : p.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={`block w-full h-full relative cursor-pointer ${p.url === '#' ? 'pointer-events-none' : ''}`}
+                >
+                  <img 
+                    src={p.image} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    alt={p.title}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement!.innerHTML = `
+                        <div class="flex flex-col items-center justify-center text-white/20 p-8 text-center h-full">
+                          <svg class="w-12 h-12 mb-4 opacity-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                          </svg>
+                          <span class="text-[10px] uppercase font-bold tracking-widest">Aguardando Imagem Portfólio</span>
+                        </div>
+                      `;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-stahl-deep/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                    <div className="p-4 bg-stahl-cyan text-white rounded-full hover:scale-110 transition-transform shadow-xl shadow-stahl-cyan/20">
+                      <ExternalLink className="w-6 h-6" />
+                    </div>
+                  </div>
+                </a>
               </div>
               <div className="p-8">
-                <div className="micro-label text-stahl-cyan mb-2">{p.category}</div>
-                <h3 className="text-2xl font-black uppercase mb-4">{p.title}</h3>
-                <p className="text-white/40 text-sm mb-6 leading-relaxed">
+                <div className="text-[10px] uppercase font-black tracking-widest text-stahl-cyan mb-2">{p.category}</div>
+                <h3 className="text-2xl font-black uppercase mb-4 tracking-tight">{p.title}</h3>
+                <p className="text-white/50 text-sm mb-6 leading-relaxed">
                   {p.desc}
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {p.features.split(", ").map((f, fi) => (
-                    <span key={fi} className="text-[9px] uppercase font-bold tracking-widest border border-white/20 px-2 py-1">
+                    <span key={fi} className="text-[9px] uppercase font-bold tracking-widest border border-white/10 bg-white/5 px-2 py-1 text-white/40 group-hover:text-white/60 transition-colors">
                       {f}
                     </span>
                   ))}
                 </div>
+                {p.url !== '#' && (
+                  <a 
+                    href={p.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-white/40 hover:text-stahl-cyan transition-colors group/link"
+                  >
+                    <span>Visitar Projeto</span>
+                    <ChevronRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
+                  </a>
+                )}
               </div>
             </motion.div>
           ))}
@@ -321,7 +346,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="depoimentos" className="py-32 bg-white text-stahl-dark overflow-hidden">
+    <section id="depoimentos" className="py-32 bg-stahl-soft text-stahl-dark overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="mb-20 text-center">
           <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Feedback</div>
@@ -330,7 +355,7 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {testimonials.map((t, i) => (
-            <div key={i} className="p-10 border-l-4 border-stahl-cyan bg-gray-50 relative">
+            <div key={i} className="p-10 border-l-4 border-stahl-cyan bg-white relative shadow-sm">
               <Quote className="absolute top-4 right-4 text-stahl-cyan/10 w-12 h-12" />
               <div className="flex gap-1 mb-6">
                 {[...Array(t.rating)].map((_, si) => (
@@ -353,7 +378,7 @@ const Testimonials = () => {
 };
 
 const About = () => (
-  <section id="sobre" className="py-32 bg-white text-stahl-dark overflow-hidden">
+  <section id="sobre" className="py-32 bg-stahl-soft text-stahl-dark overflow-hidden border-t border-slate-200">
     <div className="max-w-7xl mx-auto px-6 lg:px-12">
       <div className="max-w-4xl">
         <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Sobre Nós</div>
@@ -368,7 +393,7 @@ const About = () => (
             "Seg a Sáb até 22h",
             "Performance Web"
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4">
+            <div key={i} className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4 bg-white p-4 shadow-sm">
               <span className="font-black uppercase tracking-tight text-lg">{item}</span>
             </div>
           ))}
@@ -626,8 +651,6 @@ export default function App() {
       </main>
       <Footer />
       <BudgetModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      <Analytics />
-      <SpeedInsights />
     </div>
   );
 }
