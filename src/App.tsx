@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { 
   Code2, 
   Cloud, 
@@ -182,12 +182,24 @@ const Services = () => {
   return (
     <section id="servicos" className="py-32 bg-stahl-dark border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="mb-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-20"
+        >
           <div className="micro-label mb-4">Especialidades</div>
           <h2 className="text-5xl font-black uppercase tracking-tighter">O Que Fazemos</h2>
-        </div>
+        </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-white/10 border border-white/10">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-white/10 border border-white/10"
+        >
           {services.map((s, i) => (
             <div
               key={i}
@@ -202,7 +214,7 @@ const Services = () => {
               </p>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -212,7 +224,7 @@ const Portfolio = () => {
   const projects = [
     {
       title: "Stahl Tech Web",
-      category: "Professional Services",
+      category: "Web Design",
       image: "/portfolio-stahl.png",
       desc: "Site institucional focado em serviços de TI e Web Design com identidate visual de alto impacto.",
       url: "#",
@@ -220,7 +232,7 @@ const Portfolio = () => {
     },
     {
       title: "Michele Braz",
-      category: "Saúde & Bem-estar",
+      category: "Web Design",
       image: "/portfolio-michele.png",
       desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
       url: "https://psicomichelebraz.vercel.app/",
@@ -228,7 +240,7 @@ const Portfolio = () => {
     },
     {
       title: "Athom Academia",
-      category: "Fitness & Esporte",
+      category: "Web Design",
       image: "/portfolio-athom.png",
       desc: "Plataforma focada em conversão e engajamento para uma academia moderna.",
       url: "https://athom-academia-838260676759.us-west1.run.app/",
@@ -242,7 +254,13 @@ const Portfolio = () => {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-stahl-cyan/5 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-20 flex flex-col md:flex-row justify-between items-end gap-10"
+        >
           <div>
             <div className="micro-label mb-4 text-stahl-cyan">Projetos Recentes</div>
             <h2 className="text-5xl font-black uppercase tracking-tighter">Serviços Realizados</h2>
@@ -250,14 +268,24 @@ const Portfolio = () => {
               Criação de layout personalizado, integração com formulários de contato e otimização de performance para diversos setores.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-10"
+        >
           {projects.map((p, i) => (
             <motion.div
               key={i}
-              whileHover={{ y: -10 }}
-              className="group bg-stahl-dark/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-stahl-cyan/30 transition-colors"
+              whileHover={{ 
+                y: -10,
+                scale: 1.02,
+                boxShadow: "0 20px 40px -20px rgba(0, 243, 255, 0.3)"
+              }}
+              className="group bg-stahl-dark/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-stahl-cyan/30 transition-all duration-300 h-full flex flex-col"
             >
               <div className="relative aspect-video overflow-hidden bg-white/5 flex items-center justify-center">
                 <a 
@@ -290,10 +318,10 @@ const Portfolio = () => {
                   </div>
                 </a>
               </div>
-              <div className="p-8">
+              <div className="p-8 flex flex-col flex-grow">
                 <div className="text-[10px] uppercase font-black tracking-widest text-stahl-cyan mb-2">{p.category}</div>
                 <h3 className="text-2xl font-black uppercase mb-4 tracking-tight">{p.title}</h3>
-                <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                <p className="text-white/50 text-sm mb-6 leading-relaxed flex-grow">
                   {p.desc}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -317,7 +345,7 @@ const Portfolio = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -348,12 +376,24 @@ const Testimonials = () => {
   return (
     <section id="depoimentos" className="py-32 bg-stahl-soft text-stahl-dark overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="mb-20 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-20 text-center"
+        >
           <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Feedback</div>
           <h2 className="text-6xl font-black uppercase tracking-tighter mb-4 leading-none">O Que Dizem<br />Nossos Clientes</h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-10"
+        >
           {testimonials.map((t, i) => (
             <div key={i} className="p-10 border-l-4 border-stahl-cyan bg-white relative shadow-sm">
               <Quote className="absolute top-4 right-4 text-stahl-cyan/10 w-12 h-12" />
@@ -371,37 +411,78 @@ const Testimonials = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-const About = () => (
-  <section id="sobre" className="py-32 bg-stahl-soft text-stahl-dark overflow-hidden border-t border-slate-200">
-    <div className="max-w-7xl mx-auto px-6 lg:px-12">
-      <div className="max-w-4xl">
-        <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Sobre Nós</div>
-        <h2 className="text-6xl font-black uppercase tracking-tighter mb-10 leading-[0.9]">Excelência Técnica e Criatividade Digital</h2>
-        <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-          Na <strong>Stahl Tech Web</strong>, unimos o suporte técnico especializado à inovação do design digital. Somos especialistas em manter sua infraestrutura de hardware em perfeito estado enquanto construímos sua presença online com sites de alta performance e identidades visuais marcantes. Nossa missão é garantir que sua tecnologia nunca pare e que sua marca sempre se destaque.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-          {[
-            "Manutenção Especializada",
-            "Design de Identidade",
-            "Seg a Sáb até 22h",
-            "Performance Web"
-          ].map((item, i) => (
-            <div key={i} className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4 bg-white p-4 shadow-sm">
-              <span className="font-black uppercase tracking-tight text-lg">{item}</span>
-            </div>
-          ))}
-        </div>
+const About = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 25]);
+
+  return (
+    <section id="sobre" ref={containerRef} className="relative py-48 bg-stahl-soft text-stahl-dark overflow-hidden border-t border-slate-200">
+      {/* Parallax Decorative Elements */}
+      <motion.div 
+        style={{ y: y1, rotate }}
+        className="absolute top-20 right-[-5%] w-64 h-64 border-8 border-stahl-cyan/10 rounded-full hidden lg:block"
+      />
+      <motion.div 
+        style={{ y: y2 }}
+        className="absolute bottom-10 left-[-2%] w-48 h-48 bg-stahl-cyan/5 blur-3xl rounded-full hidden lg:block"
+      />
+      <motion.div 
+        style={{ y: y1 }}
+        className="absolute top-1/2 right-[10%] opacity-[0.03] select-none pointer-events-none hidden xl:block"
+      >
+        <span className="text-[20rem] font-black leading-none">STAHL</span>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl"
+        >
+          <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Sobre Nós</div>
+          <h2 className="text-6xl font-black uppercase tracking-tighter mb-10 leading-[0.9]">Excelência Técnica e Criatividade Digital</h2>
+          <p className="text-xl text-slate-600 mb-10 leading-relaxed">
+            Na <strong>Stahl Tech Web</strong>, unimos o suporte técnico especializado à inovação do design digital. Somos especialistas em manter sua infraestrutura de hardware em perfeito estado enquanto construímos sua presença online com sites de alta performance e identidades visuais marcantes. Nossa missão é garantir que sua tecnologia nunca pare e que sua marca sempre se destaque.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+            {[
+              "Manutenção Especializada",
+              "Design de Identidade",
+              "Seg a Sáb até 22h",
+              "Performance Web"
+            ].map((item, i) => (
+              <motion.div 
+                key={i} 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + (i * 0.1), duration: 0.5 }}
+                className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4 bg-white p-4 shadow-sm"
+              >
+                <span className="font-black uppercase tracking-tight text-lg">{item}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -425,7 +506,13 @@ const Contact = () => {
   return (
     <section id="contato" className="py-32 bg-stahl-dark">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-20"
+        >
           <div>
             <div className="micro-label mb-6">Contato</div>
             <h2 className="text-6xl font-black uppercase tracking-tighter mb-10 leading-[0.9]">Vamos Criar Algo<br /><span className="text-stahl-cyan">Impactante</span></h2>
@@ -488,7 +575,7 @@ const Contact = () => {
               </button>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
