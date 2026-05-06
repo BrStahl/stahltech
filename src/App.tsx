@@ -169,7 +169,7 @@ const Services = () => {
     },
     {
       icon: <Monitor className="w-8 h-8" />,
-      title: "Manutenção de PCs",
+      title: "Manutenção de Computadores",
       desc: "Serviços especializados de formatação, limpeza preventiva, upgrade de hardware e otimização de sistema."
     },
     {
@@ -235,7 +235,7 @@ const Portfolio = () => {
       category: "Web Design",
       image: "/portfolio-michele.png",
       desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
-      url: "https://psicomichelebraz.vercel.app/",
+      url: "https://michelebraz.com.br/",
       features: "Suave, Responsivo, Agendamento"
     },
     {
