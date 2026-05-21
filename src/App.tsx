@@ -231,20 +231,20 @@ const Portfolio = () => {
       features: "Personalizado, Otimizado, Formulários"
     },
     {
-      title: "Michele Braz",
+      title: "Psicóloga Michele Braz",
       category: "Web Design",
       image: "/portfolio-michele.png",
       desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
-      url: "https://michelebraz.com.br/",
+      url: "https://psicomichelebraz.vercel.app/",
       features: "Suave, Responsivo, Agendamento"
     },
     {
-      title: "Athom Academia",
+      title: "Psicólogo Ivan Vieira",
       category: "Web Design",
-      image: "/portfolio-athom.png",
-      desc: "Plataforma focada em conversão e engajamento para uma academia moderna.",
-      url: "https://athom-academia-838260676759.us-west1.run.app/",
-      features: "Dinâmico, CTA Forte, Performance"
+      image: "/portfolio-ivan.png",
+      desc: "Portfólio online profissional, oferecendo agendamentos e uma apresentação clara dos serviços psicológicos.",
+      url: "https://www.ivanvieira.com.br",
+      features: "Elegante, Conversão, Agendamento"
     }
   ];
 
@@ -447,38 +447,72 @@ const About = () => {
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl"
-        >
-          <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Sobre Nós</div>
-          <h2 className="text-6xl font-black uppercase tracking-tighter mb-10 leading-[0.9]">Excelência Técnica e Criatividade Digital</h2>
-          <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-            Na <strong>Stahl Tech Web</strong>, unimos o suporte técnico especializado à inovação do design digital. Somos especialistas em manter sua infraestrutura de hardware em perfeito estado enquanto construímos sua presença online com sites de alta performance e identidades visuais marcantes. Nossa missão é garantir que sua tecnologia nunca pare e que sua marca sempre se destaque.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-            {[
-              "Manutenção Especializada",
-              "Design de Identidade",
-              "Seg a Sáb até 22h",
-              "Performance Web"
-            ].map((item, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + (i * 0.1), duration: 0.5 }}
-                className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4 bg-white p-4 shadow-sm"
-              >
-                <span className="font-black uppercase tracking-tight text-lg">{item}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          
+          {/* COLUNA ESQUERDA - FOTO */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+             <div className="aspect-[4/5] bg-gray-200 overflow-hidden shadow-2xl relative border-8 border-white">
+                <img 
+                  src="/bryan.jpg"
+                  alt="Bryan Rodrigo Stahl"
+                  className="w-full h-full object-cover filter contrast-125"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=800&auto=format&fit=crop"; 
+                  }}
+                />
+             </div>
+             {/* Decorative box behind image */}
+             <div className="absolute -z-10 bg-stahl-cyan/20 w-full h-full top-6 -left-6 border border-stahl-cyan/30"></div>
+          </motion.div>
+
+          {/* COLUNA DIREITA - TEXTO */}
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Sobre Mim</div>
+            <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
+              Bryan Rodrigo<br/>Stahl
+            </h2>
+            
+            <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
+              <p>
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai orgulhoso da Mariah.
+              </p>
+              <p>
+                Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
+              </p>
+              <p>
+                Atualmente, estou aprimorando minha base técnica cursando <strong>Análise e Desenvolvimento de Sistemas</strong>. Na Stahl Tech Web, uno minha dedicação e expertise acumulada para entregar desde suportes confiáveis em hardwares até sites desenvolvidos com altíssima precisão e performance.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                "13+ Anos de T.I.",
+                "Graduando ADS",
+                "Limeira - SP",
+                "Foco em Resultado"
+              ].map((item, i) => (
+                <div 
+                  key={i} 
+                  className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4 bg-white p-3 shadow-sm"
+                >
+                  <span className="font-black uppercase tracking-tight text-sm text-stahl-dark">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
