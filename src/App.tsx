@@ -41,7 +41,7 @@ const Logo = ({ className = "" }: { className?: string }) => (
         STAHL
       </span>
       <span className="text-sm font-black uppercase tracking-widest text-stahl-cyan">
-        TECH WEB
+        TECH &  WEB
       </span>
       <span className="text-[9px] uppercase tracking-[0.1em] font-bold text-white/40 mt-1">
         SEUS PARCEIROS DIGITAIS
@@ -513,6 +513,76 @@ const About = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* NICOLLY PROFILE */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mt-32">
+          
+          {/* COLUNA ESQUERDA - TEXTO */}
+          <motion.div 
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-2 lg:order-1"
+          >
+            <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Nossa Equipe</div>
+            <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
+              Nicolly Regina<br/>Lopes da Silva
+            </h2>
+            
+            <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
+              <p>
+                Olá! Sou a Nicolly. Tenho 25 anos e uma paixão imensa por cuidar de pessoas e organizar processos. Sou formada em <strong>Administração</strong>, o que me deu uma visão muito ampla sobre gestão e organização.
+              </p>
+              <p>
+                Atualmente, estou seguindo meu coração e cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
+              </p>
+              <p>
+                Trabalho ao lado do Bryan (que também é meu marido!), somando forças para garantir que o atendimento, o planejamento e os bastidores dos nossos projetos na Stahl Tech & Web sejam impecáveis e funcionem perfeitamente.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                "25 Anos",
+                "Formada em Adm",
+                "Cursando Fonoaudiologia",
+                "Gestão & Organização"
+              ].map((item, i) => (
+                <div 
+                  key={i} 
+                  className="flex items-center gap-4 border-l-4 border-stahl-cyan pl-4 bg-white p-3 shadow-sm"
+                >
+                  <span className="font-black uppercase tracking-tight text-sm text-stahl-dark">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* COLUNA DIREITA - FOTO */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative order-1 lg:order-2"
+          >
+             <div className="aspect-[4/5] bg-gray-200 overflow-hidden shadow-2xl relative border-8 border-white">
+                <img 
+                  src="/nicolly.jpg"
+                  alt="Nicolly Regina Lopes da Silva"
+                  className="w-full h-full object-cover filter contrast-125"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop"; 
+                  }}
+                />
+             </div>
+             {/* Decorative box behind image */}
+             <div className="absolute -z-10 bg-stahl-cyan/20 w-full h-full top-6 right-6 lg:-right-6 lg:left-auto border border-stahl-cyan/30"></div>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
@@ -622,7 +692,7 @@ const Footer = () => (
         <Logo />
         
         <p className="text-[10px] uppercase tracking-[0.2em] font-bold">
-          © {new Date().getFullYear()} Stahl Tech Web. All rights reserved.
+          © {new Date().getFullYear()} Stahl Tech & Web. All rights reserved.
         </p>
       </div>
     </div>
