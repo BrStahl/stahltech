@@ -486,7 +486,7 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai orgulhoso da Mariah.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
               </p>
               <p>
                 Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
