@@ -235,7 +235,7 @@ const Portfolio = () => {
       category: "Web Design",
       image: "/portfolio-michele.png",
       desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
-      url: "https://psicomichelebraz.vercel.app/",
+      url: "https://www.michelebraz.com.br/",
       features: "Suave, Responsivo, Agendamento"
     },
     {
