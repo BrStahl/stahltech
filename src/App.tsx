@@ -640,7 +640,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">WhatsApp</span>
-                <a href="https://wa.link/0cy014" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 99774-4518</a>
+                <a href="https://wa.link/0s9ee3" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 99774-4518</a>
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">Localização</span>
