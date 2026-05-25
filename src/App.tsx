@@ -235,7 +235,7 @@ const Portfolio = () => {
       category: "Web Design",
       image: "/portfolio-michele.png",
       desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
-      url: "https://www.michelebraz.com.br/",
+      url: "https://www.michelebraz.com.br",
       features: "Suave, Responsivo, Agendamento"
     },
     {
@@ -447,6 +447,18 @@ const About = () => {
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        {/* Section Heading */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-32 text-center"
+        >
+          <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Equipe</div>
+          <h2 className="text-6xl font-black uppercase tracking-tighter leading-none">Quem Somos</h2>
+        </motion.div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           {/* COLUNA ESQUERDA - FOTO */}
