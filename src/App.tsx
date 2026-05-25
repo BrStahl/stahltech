@@ -498,10 +498,10 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em Limeira - SP, sou casado com Nicolly e pai.
               </p>
               <p>
-                Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
+                Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. desde os meus 16 anos, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
               </p>
               <p>
                 Atualmente, estou aprimorando minha base técnica cursando <strong>Análise e Desenvolvimento de Sistemas</strong>. Na Stahl Tech Web, uno minha dedicação e expertise acumulada para entregar desde suportes confiáveis em hardwares até sites desenvolvidos com altíssima precisão e performance.
@@ -512,7 +512,7 @@ const About = () => {
               {[
                 "13+ Anos de T.I.",
                 "Graduando ADS",
-                "Limeira - SP",
+                "Limeira/SP",
                 "Foco em Resultado"
               ].map((item, i) => (
                 <div 
@@ -539,7 +539,7 @@ const About = () => {
           >
             <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Nossa Equipe</div>
             <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
-              Nicolly Regina<br/>Lopes da Silva
+              Nicolly <br/>Lopes Stahl
             </h2>
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
@@ -550,7 +550,7 @@ const About = () => {
                 Atualmente, estou seguindo meu coração e cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
               </p>
               <p>
-                Trabalho ao lado do Bryan (que também é meu marido!), somando forças para garantir que o atendimento, o planejamento e os bastidores dos nossos projetos na Stahl Tech & Web sejam impecáveis e funcionem perfeitamente.
+                Trabalho ao lado do Bryan, somando forças para garantir que o atendimento, o planejamento e os bastidores dos nossos projetos na Stahl Tech & Web sejam impecáveis e funcionem perfeitamente.
               </p>
             </div>
             
