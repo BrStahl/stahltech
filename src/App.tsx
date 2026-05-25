@@ -640,7 +640,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">WhatsApp</span>
-                <a href="https://wa.link/0cy014" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 98441-1208</a>
+                <a href="https://wa.link/0cy014" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 99774-4518</a>
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">Localização</span>
@@ -751,7 +751,7 @@ const BudgetModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
       `*Mensagem:* ${formData.mensagem}`;
     
     const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/5519984411208?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/5519997744518?text=${encodedText}`, "_blank");
   };
 
   return (
