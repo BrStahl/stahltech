@@ -498,13 +498,13 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em Limeira - SP, sou casado com Nicolly e pai.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em Limeira/SP, sou casado com a Nicolly e pai.
               </p>
               <p>
                 Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. desde os meus 16 anos, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
               </p>
               <p>
-                Atualmente, estou aprimorando minha base técnica cursando <strong>Análise e Desenvolvimento de Sistemas</strong>. Na Stahl Tech Web, uno minha dedicação e expertise acumulada para entregar desde suportes confiáveis em hardwares até sites desenvolvidos com altíssima precisão e performance.
+                Atualmente, estou aprimorando minha base técnica cursando <strong>Análise e Desenvolvimento de Sistemas</strong>. Na Stahl Tech & Web, uno minha dedicação e expertise acumulada para entregar desde suportes confiáveis em hardwares até sites desenvolvidos com altíssima precisão e performance.
               </p>
             </div>
             
@@ -544,7 +544,7 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou a Nicolly. Tenho 24 anos e uma paixão imensa por cuidar de pessoas e organizar processos. Sou formada em <strong>Administração</strong>, o que me deu uma visão muito ampla sobre gestão e organização.
+                Olá! Sou a Nicolly. Tenho 24 anos e uma paixão imensa por cuidar de pessoas e organizar processos. Sou formada em <strong>Administração</strong>, o que me deu uma visão muito ampla sobre gestão, organização e negócio.
               </p>
               <p>
                 Atualmente, estou cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
