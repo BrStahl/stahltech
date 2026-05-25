@@ -547,7 +547,7 @@ const About = () => {
                 Olá! Sou a Nicolly. Tenho 24 anos e uma paixão imensa por cuidar de pessoas e organizar processos. Sou formada em <strong>Administração</strong>, o que me deu uma visão muito ampla sobre gestão e organização.
               </p>
               <p>
-                Atualmente, estou seguindo meu coração e cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
+                Atualmente, estou cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
               </p>
               <p>
                 Trabalho ao lado do Bryan, somando forças para garantir que o atendimento, o planejamento e os bastidores dos nossos projetos na Stahl Tech & Web sejam impecáveis e funcionem perfeitamente.
