@@ -7,12 +7,14 @@ interface FirebaseContextType {
   user: User | null;
   loading: boolean;
   isAdmin: boolean;
+  connectionError: string | null;
 }
 
 const FirebaseContext = createContext<FirebaseContextType>({
   user: null,
   loading: true,
   isAdmin: false,
+  connectionError: null,
 });
 
 export const useFirebase = () => useContext(FirebaseContext);
@@ -20,6 +22,7 @@ export const useFirebase = () => useContext(FirebaseContext);
 export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
 
   const isAdmin = user?.email === 'stahltechweb@gmail.com';
 
@@ -33,10 +36,18 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const testConnection = async () => {
       try {
         await getDocFromServer(doc(db, 'test', 'connection'));
-      } catch (error) {
+      } catch (error: any) {
+        console.error("Firestore connection test failed:", error);
+        
+        let msg = "Não foi possível alcançar o servidor do Firestore.";
         if (error instanceof Error && error.message.includes('the client is offline')) {
-          console.error("Please check your Firebase configuration.");
+          msg = "Erro de rede / Offline. Verifique sua conexão ou se seu navegador/extensão (AdBlock, Brave Tracker Shields) está bloqueando as conexões do Firebase.";
+        } else if (error?.code === 'failed-precondition' || error?.message?.includes('permissions')) {
+          msg = "Sem permissão na regra ou inicialização pendente no Console do Firebase.";
         }
+        
+        setConnectionError(msg);
+        console.error("Please check your Firebase configuration.");
       }
     };
     testConnection();
@@ -45,7 +56,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, []);
 
   return (
-    <FirebaseContext.Provider value={{ user, loading, isAdmin }}>
+    <FirebaseContext.Provider value={{ user, loading, isAdmin, connectionError }}>
       {children}
     </FirebaseContext.Provider>
   );

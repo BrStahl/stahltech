@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, Link } from "react-router-dom";
 import { FirebaseProvider, useFirebase } from "./components/FirebaseProvider";
 import { 
   Code2, 
@@ -594,7 +594,7 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 30 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
               </p>
               <p>
                 Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
@@ -747,7 +747,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">WhatsApp</span>
-                <a href="https://wa.link/0cy014" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 98441-1208</a>
+                <a href="https://wa.me/5519997744518" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 99774-4518</a>
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">Localização</span>
@@ -814,9 +814,9 @@ const Footer = () => (
           © {new Date().getFullYear()} Stahl Tech & Web. All rights reserved.
         </p>
 
-        <a href="/admin" className="text-[10px] uppercase tracking-[0.2em] font-bold hover:text-white transition-colors">
+        <Link to="/admin" className="text-[10px] uppercase tracking-[0.2em] font-bold hover:text-white transition-colors">
           Admin
-        </a>
+        </Link>
       </div>
     </div>
   </footer>
@@ -872,7 +872,7 @@ const BudgetModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
       `*Mensagem:* ${formData.mensagem}`;
     
     const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/5519984411208?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/5519997744518?text=${encodedText}`, "_blank");
   };
 
   return (
@@ -1020,6 +1020,7 @@ import { auth, db, handleFirestoreError, OperationType } from "./lib/firebase";
 import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 const AdminLogin = () => {
+  const { connectionError } = useFirebase();
   const [errorStatus, setErrorStatus] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [email, setEmail] = useState("stahltechweb@gmail.com");
@@ -1083,6 +1084,15 @@ const AdminLogin = () => {
         
         <h1 className="text-3xl font-black mb-6 uppercase tracking-tighter text-center">Área Administrativa</h1>
         
+        {connectionError && (
+          <div className="bg-amber-500/15 border border-amber-500/40 p-4 mb-6 rounded-sm text-center">
+            <p className="text-amber-500 font-bold mb-1 uppercase text-xs tracking-wider">💡 Alerta de Conexão (Firestore)</p>
+            <p className="text-[11px] text-white/90 leading-relaxed">
+              {connectionError}
+            </p>
+          </div>
+        )}
+
         {errorStatus && (
           <div className="bg-red-500/10 border border-red-500/50 p-4 mb-6 text-center rounded-sm">
             <p className="text-red-500 font-bold mb-2 uppercase text-xs tracking-widest">Erro de Conexão</p>
@@ -1165,7 +1175,7 @@ const AdminLogin = () => {
           <p className="text-white/40 text-[9px] uppercase font-bold tracking-widest mb-4 leading-relaxed">
             Se for o primeiro acesso pelo e-mail e senha, selecione "Cadastrar Usuário Admin" sob o formulário para registrar.
           </p>
-          <a href="/" className="text-white/40 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold border-b border-white/10 pb-1">Voltar para o site</a>
+          <Link to="/" className="text-white/40 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold border-b border-white/10 pb-1">Voltar para o site</Link>
         </div>
       </div>
     </div>
