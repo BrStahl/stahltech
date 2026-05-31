@@ -25,7 +25,9 @@ import {
   UserPlus,
   Plus,
   Trash2,
-  Edit
+  Edit,
+  ChevronLeft,
+  Briefcase
 } from "lucide-react";
 
 const Logo = ({ className = "" }: { className?: string }) => (
@@ -227,33 +229,81 @@ const Services = () => {
   );
 };
 
+const DEFAULT_PROJECTS = [
+  {
+    title: "Stahl Tech Web",
+    category: "Web Design",
+    image: "/portfolio-stahl.png",
+    desc: "Site institucional focado em serviços de TI e Web Design com identidate visual de alto impacto.",
+    url: "#",
+    features: "Personalizado, Otimizado, Formulários"
+  },
+  {
+    title: "Psicóloga Michele Braz",
+    category: "Web Design",
+    image: "/portfolio-michele.png",
+    desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
+    url: "https://www.michelebraz.com.br",
+    features: "Suave, Responsivo, Agendamento"
+  },
+  {
+    title: "Psicólogo Ivan Vieira",
+    category: "Web Design",
+    image: "/portfolio-ivan.png",
+    desc: "Portfólio online profissional, oferecendo agendamentos e uma apresentação clara dos serviços psicológicos.",
+    url: "https://www.ivanvieira.com.br",
+    features: "Elegante, Conversão, Agendamento"
+  }
+];
+
 const Portfolio = () => {
-  const projects = [
-    {
-      title: "Stahl Tech Web",
-      category: "Web Design",
-      image: "/portfolio-stahl.png",
-      desc: "Site institucional focado em serviços de TI e Web Design com identidate visual de alto impacto.",
-      url: "#",
-      features: "Personalizado, Otimizado, Formulários"
-    },
-    {
-      title: "Psicóloga Michele Braz",
-      category: "Web Design",
-      image: "/portfolio-michele.png",
-      desc: "Landing page para psicologia focada em captação de pacientes e profissionalismo.",
-      url: "https://www.michelebraz.com.br",
-      features: "Suave, Responsivo, Agendamento"
-    },
-    {
-      title: "Psicólogo Ivan Vieira",
-      category: "Web Design",
-      image: "/portfolio-ivan.png",
-      desc: "Portfólio online profissional, oferecendo agendamentos e uma apresentação clara dos serviços psicológicos.",
-      url: "https://www.ivanvieira.com.br",
-      features: "Elegante, Conversão, Agendamento"
+  const [projectsList, setProjectsList] = useState<any[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleItems, setVisibleItems] = useState(3);
+
+  useEffect(() => {
+    const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setProjectsList(items);
+    }, (error) => {
+      console.error("Error fetching projects:", error);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleItems(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleItems(2);
+      } else {
+        setVisibleItems(3);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const displayProjects = projectsList.length > 0 ? projectsList : DEFAULT_PROJECTS;
+  const N = displayProjects.length;
+  const maxIndex = Math.max(0, N - visibleItems);
+
+  useEffect(() => {
+    if (currentIndex > maxIndex) {
+      setCurrentIndex(maxIndex);
     }
-  ];
+  }, [maxIndex, currentIndex]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
 
   return (
     <section id="portfolio" className="py-32 bg-stahl-deep border-y border-white/5 relative overflow-hidden">
@@ -261,13 +311,7 @@ const Portfolio = () => {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-stahl-cyan/5 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mb-20 flex flex-col md:flex-row justify-between items-end gap-10"
-        >
+        <div className="mb-12 flex flex-col md:flex-row justify-between items-end gap-10">
           <div>
             <div className="micro-label mb-4 text-stahl-cyan">Projetos Recentes</div>
             <h2 className="text-5xl font-black uppercase tracking-tighter">Serviços Realizados</h2>
@@ -275,84 +319,129 @@ const Portfolio = () => {
               Criação de layout personalizado, integração com formulários de contato e otimização de performance para diversos setores.
             </p>
           </div>
-        </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-10"
-        >
-          {projects.map((p, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ 
-                y: -10,
-                scale: 1.02,
-                boxShadow: "0 20px 40px -20px rgba(0, 243, 255, 0.3)"
-              }}
-              className="group bg-stahl-dark/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-stahl-cyan/30 transition-all duration-300 h-full flex flex-col"
-            >
-              <div className="relative aspect-video overflow-hidden bg-white/5 flex items-center justify-center">
-                <a 
-                  href={p.url === '#' ? undefined : p.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className={`block w-full h-full relative cursor-pointer ${p.url === '#' ? 'pointer-events-none' : ''}`}
+          {N > visibleItems && (
+            <div className="flex gap-4">
+              <button 
+                onClick={handlePrev}
+                className="w-12 h-12 flex items-center justify-center border border-white/10 bg-stahl-dark/40 hover:bg-stahl-cyan hover:text-stahl-dark hover:border-stahl-cyan transition-all text-white rounded-full group shadow-md shadow-black/10"
+                aria-label="Projeto anterior"
+              >
+                <ChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </button>
+              <button 
+                onClick={handleNext}
+                className="w-12 h-12 flex items-center justify-center border border-white/10 bg-stahl-dark/40 hover:bg-stahl-cyan hover:text-stahl-dark hover:border-stahl-cyan transition-all text-white rounded-full group shadow-md shadow-black/10"
+                aria-label="Próximo projeto"
+              >
+                <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="relative overflow-hidden -mx-4 px-4 py-4">
+          <div 
+            className="flex transition-transform duration-500 ease-out"
+            style={{ 
+              transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`
+            }}
+          >
+            {displayProjects.map((p, i) => (
+              <div 
+                key={p.id || i} 
+                className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4"
+              >
+                <motion.div
+                  whileHover={{ 
+                    y: -10,
+                    scale: 1.02,
+                    boxShadow: "0 20px 40px -20px rgba(0, 243, 255, 0.3)"
+                  }}
+                  className="group bg-stahl-dark/40 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-stahl-cyan/30 transition-all duration-300 h-[500px] flex flex-col"
                 >
-                  <img 
-                    src={p.image} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
-                    alt={p.title}
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement!.innerHTML = `
-                        <div class="flex flex-col items-center justify-center text-white/20 p-8 text-center h-full">
-                          <svg class="w-12 h-12 mb-4 opacity-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                          </svg>
-                          <span class="text-[10px] uppercase font-bold tracking-widest">Aguardando Imagem Portfólio</span>
+                  <div className="relative aspect-video overflow-hidden bg-white/5 flex items-center justify-center flex-shrink-0">
+                    <a 
+                      href={p.url === '#' || !p.url ? undefined : p.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={`block w-full h-full relative cursor-pointer ${p.url === '#' || !p.url ? 'pointer-events-none' : ''}`}
+                    >
+                      <img 
+                        src={p.image || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                        alt={p.title}
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.parentElement!.innerHTML = `
+                            <div class="flex flex-col items-center justify-center text-white/20 p-8 text-center h-full">
+                              <svg class="w-12 h-12 mb-4 opacity-20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                              </svg>
+                              <span class="text-[10px] uppercase font-bold tracking-widest">Aguardando Imagem Portfólio</span>
+                            </div>
+                          `;
+                        }}
+                      />
+                      {p.url && p.url !== '#' && (
+                        <div className="absolute inset-0 bg-stahl-deep/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                          <div className="p-4 bg-stahl-cyan text-white rounded-full hover:scale-110 transition-transform shadow-xl shadow-stahl-cyan/20 animate-none">
+                            <ExternalLink className="w-6 h-6 text-stahl-dark" />
+                          </div>
                         </div>
-                      `;
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-stahl-deep/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                    <div className="p-4 bg-stahl-cyan text-white rounded-full hover:scale-110 transition-transform shadow-xl shadow-stahl-cyan/20">
-                      <ExternalLink className="w-6 h-6" />
+                      )}
+                    </a>
+                  </div>
+                  <div className="p-8 flex flex-col flex-grow justify-between">
+                    <div>
+                      <div className="text-[10px] uppercase font-black tracking-widest text-stahl-cyan mb-2">{p.category}</div>
+                      <h3 className="text-2xl font-black uppercase mb-4 tracking-tight line-clamp-1">{p.title}</h3>
+                      <p className="text-white/50 text-sm mb-6 leading-relaxed line-clamp-3">
+                        {p.desc}
+                      </p>
+                    </div>
+                    <div>
+                      {p.features && (
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {p.features.split(",").map((f: string, fi: number) => (
+                            <span key={fi} className="text-[9px] uppercase font-bold tracking-widest border border-white/10 bg-white/5 px-2 py-1 text-white/40 group-hover:text-white/60 transition-colors">
+                              {f.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      {p.url && p.url !== '#' && (
+                        <a 
+                          href={p.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="inline-flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-white/40 hover:text-stahl-cyan transition-colors group/link"
+                        >
+                          <span>Visitar Projeto</span>
+                          <ChevronRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
+                        </a>
+                      )}
                     </div>
                   </div>
-                </a>
+                </motion.div>
               </div>
-              <div className="p-8 flex flex-col flex-grow">
-                <div className="text-[10px] uppercase font-black tracking-widest text-stahl-cyan mb-2">{p.category}</div>
-                <h3 className="text-2xl font-black uppercase mb-4 tracking-tight">{p.title}</h3>
-                <p className="text-white/50 text-sm mb-6 leading-relaxed flex-grow">
-                  {p.desc}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {p.features.split(", ").map((f, fi) => (
-                    <span key={fi} className="text-[9px] uppercase font-bold tracking-widest border border-white/10 bg-white/5 px-2 py-1 text-white/40 group-hover:text-white/60 transition-colors">
-                      {f}
-                    </span>
-                  ))}
-                </div>
-                {p.url !== '#' && (
-                  <a 
-                    href={p.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest text-white/40 hover:text-stahl-cyan transition-colors group/link"
-                  >
-                    <span>Visitar Projeto</span>
-                    <ChevronRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {N > visibleItems && (
+          <div className="flex justify-center gap-2 mt-8">
+            {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                className={`w-2 h-2 rounded-full transition-all ${currentIndex === idx ? 'bg-stahl-cyan w-6' : 'bg-white/20 hover:bg-white/45'}`}
+                aria-label={`Ir para slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1087,9 +1176,12 @@ const AdminDashboard = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [budgets, setBudgets] = useState<any[]>([]);
   const [clients, setClients] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'messages' | 'budgets' | 'clients'>('messages');
+  const [projects, setProjects] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<'messages' | 'budgets' | 'clients' | 'projects'>('messages');
   const [showClientForm, setShowClientForm] = useState(false);
   const [editingClient, setEditingClient] = useState<any>(null);
+  const [showProjectForm, setShowProjectForm] = useState(false);
+  const [editingProject, setEditingProject] = useState<any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -1117,10 +1209,19 @@ const AdminDashboard = () => {
       handleFirestoreError(error, OperationType.LIST, "clients");
     });
 
+    const qProjects = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+    const unsubscribeProjects = onSnapshot(qProjects, (snapshot) => {
+      const projs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setProjects(projs);
+    }, (error) => {
+      handleFirestoreError(error, OperationType.LIST, "projects");
+    });
+
     return () => {
       unsubscribeMessages();
       unsubscribeBudgets();
       unsubscribeClients();
+      unsubscribeProjects();
     };
   }, []);
 
@@ -1137,6 +1238,21 @@ const AdminDashboard = () => {
         await deleteDoc(doc(db, "clients", id));
       } catch (error) {
         console.error("Error deleting client:", error);
+      }
+    }
+  };
+
+  const handleEditProject = (project: any) => {
+    setEditingProject(project);
+    setShowProjectForm(true);
+  };
+
+  const handleDeleteProject = async (id: string) => {
+    if (window.confirm("Deseja realmente excluir este projeto do portfólio?")) {
+      try {
+        await deleteDoc(doc(db, "projects", id));
+      } catch (error) {
+        console.error("Error deleting project:", error);
       }
     }
   };
@@ -1169,6 +1285,12 @@ const AdminDashboard = () => {
             Orçamentos ({budgets.length})
           </button>
           <button 
+            onClick={() => setActiveTab('projects')}
+            className={`px-6 py-3 font-black uppercase tracking-tight transition-colors ${activeTab === 'projects' ? 'bg-stahl-cyan text-white' : 'bg-white text-slate-400 hover:bg-slate-100'}`}
+          >
+            Portfólio ({projects.length})
+          </button>
+          <button 
             onClick={() => setActiveTab('clients')}
             className={`px-6 py-3 font-black uppercase tracking-tight transition-colors ${activeTab === 'clients' ? 'bg-stahl-cyan text-white' : 'bg-white text-slate-400 hover:bg-slate-100'}`}
           >
@@ -1177,14 +1299,16 @@ const AdminDashboard = () => {
         </div>
 
         <div className="bg-white p-8 shadow-sm border border-slate-200">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 text-center md:text-left flex-col md:flex-row gap-4">
             <h2 className="text-xl font-bold flex items-center gap-2 uppercase tracking-tight">
               {activeTab === 'messages' && <Mail className="w-5 h-5 text-stahl-cyan" />}
               {activeTab === 'budgets' && <Zap className="w-5 h-5 text-stahl-cyan" />}
+              {activeTab === 'projects' && <Briefcase className="w-5 h-5 text-stahl-cyan" />}
               {activeTab === 'clients' && <Users className="w-5 h-5 text-stahl-cyan" />}
               
               {activeTab === 'messages' && 'Mensagens do Site'}
               {activeTab === 'budgets' && 'Solicitações de Orçamentos'}
+              {activeTab === 'projects' && 'Portfólio & Projetos'}
               {activeTab === 'clients' && 'Cadastro de Clientes'}
             </h2>
             
@@ -1194,6 +1318,18 @@ const AdminDashboard = () => {
                 className="flex items-center gap-2 px-4 py-2 bg-stahl-dark text-white text-xs font-bold uppercase hover:bg-stahl-dark/90 transition-colors"
               >
                 <Plus className="w-4 h-4" /> Novo Cliente
+              </button>
+            )}
+
+            {activeTab === 'projects' && (
+              <button 
+                onClick={() => {
+                  setEditingProject(null);
+                  setShowProjectForm(true);
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-stahl-dark text-white text-xs font-bold uppercase hover:bg-stahl-dark/90 transition-colors"
+              >
+                <Plus className="w-4 h-4" /> Novo Projeto
               </button>
             )}
           </div>
@@ -1252,6 +1388,87 @@ const AdminDashboard = () => {
                         <td className="py-4 text-slate-600">
                           {b.email}<br/>
                           <span className="font-bold">{b.telefone}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
+          )}
+
+          {activeTab === 'projects' && (
+            projects.length === 0 ? (
+              <div className="text-center py-20 border-2 border-dashed border-slate-200">
+                <Briefcase className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                <p className="text-slate-400 italic">Nenhum projeto cadastrado no portfólio.</p>
+                <button 
+                  onClick={() => {
+                    setEditingProject(null);
+                    setShowProjectForm(true);
+                  }}
+                  className="mt-4 text-stahl-cyan font-bold uppercase text-xs"
+                >
+                  Cadastrar Primeiro Projeto
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b text-xs uppercase tracking-wider text-slate-400 font-black">
+                      <th className="pb-4">Imagem</th>
+                      <th className="pb-4">Título / Categoria</th>
+                      <th className="pb-4">Descrição</th>
+                      <th className="pb-4">Recursos</th>
+                      <th className="pb-4 text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {projects.map((proj) => (
+                      <tr key={proj.id} className="text-sm">
+                        <td className="py-4 pr-4 w-20">
+                          <img 
+                            src={proj.image || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"} 
+                            alt={proj.title} 
+                            className="w-16 h-10 object-cover border border-slate-200 rounded"
+                            referrerPolicy="no-referrer"
+                            onError={(e) => {
+                              e.currentTarget.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
+                            }}
+                          />
+                        </td>
+                        <td className="py-4 pr-4">
+                          <div className="font-bold text-slate-900">{proj.title}</div>
+                          <span className="text-[10px] uppercase font-bold text-stahl-cyan bg-stahl-cyan/10 px-2 py-0.5 rounded">
+                            {proj.category}
+                          </span>
+                        </td>
+                        <td className="py-4 text-slate-600 pr-4 max-w-xs truncate">{proj.desc}</td>
+                        <td className="py-4 text-slate-600 pr-4 max-w-xs">
+                          {proj.features?.split(",").map((f: string, fi: number) => (
+                            <span key={fi} className="inline-block text-[9px] uppercase font-bold text-slate-500 bg-slate-100 border border-slate-200 px-1.5 py-0.5 mr-1 mb-1 rounded-sm">
+                              {f.trim()}
+                            </span>
+                          ))}
+                        </td>
+                        <td className="py-4 text-right">
+                          <div className="flex justify-end gap-2">
+                            <button 
+                              onClick={() => handleEditProject(proj)}
+                              className="p-2 text-slate-400 hover:text-stahl-cyan transition-colors"
+                              title="Editar"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button 
+                              onClick={() => handleDeleteProject(proj.id)}
+                              className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                              title="Excluir"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -1328,6 +1545,17 @@ const AdminDashboard = () => {
           onClose={() => {
             setShowClientForm(false);
             setEditingClient(null);
+          }} 
+        />
+      )}
+
+      {/* Project Form Modal */}
+      {showProjectForm && (
+        <ProjectModal 
+          project={editingProject} 
+          onClose={() => {
+            setShowProjectForm(false);
+            setEditingProject(null);
           }} 
         />
       )}
@@ -1438,3 +1666,134 @@ const ClientModal = ({ client, onClose }: { client?: any, onClose: () => void })
     </div>
   );
 };
+
+const ProjectModal = ({ project, onClose }: { project?: any, onClose: () => void }) => {
+  const [formData, setFormData] = useState({
+    title: project?.title || "",
+    category: project?.category || "Web Design",
+    image: project?.image || "",
+    desc: project?.desc || "",
+    url: project?.url || "",
+    features: project?.features || ""
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (project?.id) {
+        await updateDoc(doc(db, "projects", project.id), formData);
+      } else {
+        await addDoc(collection(db, "projects"), {
+          ...formData,
+          createdAt: serverTimestamp()
+        });
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error saving project:", error);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-stahl-dark/80 backdrop-blur-sm shadow-xl">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white w-full max-w-lg p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+      >
+        <button onClick={onClose} className="absolute top-6 right-6 text-slate-400 hover:text-slate-900">
+          <X className="w-6 h-6" />
+        </button>
+
+        <h2 className="text-2xl font-black uppercase tracking-tighter mb-8 border-b pb-4 text-slate-900">
+          {project ? 'Editar Projeto' : 'Novo Projeto de Portfólio'}
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Título do Projeto *</label>
+            <input 
+              required
+              type="text"
+              className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors font-bold text-slate-900 text-sm"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Categoria *</label>
+              <select 
+                required
+                className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900 text-sm bg-white"
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              >
+                <option value="Web Design">Web Design</option>
+                <option value="Identidade Visual">Identidade Visual</option>
+                <option value="Criação de Site">Criação de Site</option>
+                <option value="Combo">Combo</option>
+                <option value="Design Gráfico">Design Gráfico</option>
+                <option value="Infraestrutura TI">Infraestrutura TI</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">URL do Projeto</label>
+              <input 
+                type="text"
+                placeholder="Ex: https://site.com ou #"
+                className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900 text-sm"
+                value={formData.url}
+                onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">URL da Imagem do Projeto</label>
+            <input 
+              type="text"
+              placeholder="Ex: /portfolio-michele.png ou link externo"
+              className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900 text-sm"
+              value={formData.image}
+              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Recursos / Tags * (separados por vírgula)</label>
+            <input 
+              required
+              type="text"
+              placeholder="Ex: Personalizado, Otimizado, Agendamento"
+              className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900 text-sm"
+              value={formData.features}
+              onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Descrição do Projeto *</label>
+            <textarea 
+              required
+              className="w-full border-2 border-slate-100 p-3 outline-none focus:border-stahl-cyan transition-colors text-slate-900 h-24 resize-none text-sm"
+              value={formData.desc}
+              onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
+            ></textarea>
+          </div>
+
+          <div className="pt-4 flex gap-4">
+            <button type="submit" className="flex-1 bg-stahl-dark text-white py-4 font-black uppercase tracking-widest text-xs hover:bg-stahl-cyan transition-colors">
+              Salvar Projeto
+            </button>
+            <button type="button" onClick={onClose} className="px-6 py-4 border-2 border-slate-100 font-black uppercase tracking-widest text-xs hover:bg-slate-50 transition-colors">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
