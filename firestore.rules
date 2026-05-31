@@ -1,0 +1,111 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == "stahltechweb@gmail.com";
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Entity Validations
+    function isValidProject(data) {
+      return data.keys().hasAll(['title', 'category', 'image', 'desc', 'url', 'features']) &&
+             data.keys().size() >= 6 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.category is string && data.category.size() <= 100 &&
+             data.image is string && data.image.size() <= 1000 &&
+             data.desc is string && data.desc.size() <= 1000 &&
+             data.url is string && data.url.size() <= 1000 &&
+             data.features is string && data.features.size() <= 500;
+    }
+
+    function isValidService(data) {
+      return data.keys().hasAll(['title', 'desc', 'iconName']) &&
+             data.keys().size() == 3 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.desc is string && data.desc.size() <= 1000 &&
+             data.iconName is string && data.iconName.size() <= 100;
+    }
+
+    function isValidTestimonial(data) {
+      return data.keys().hasAll(['name', 'role', 'text', 'rating']) &&
+             data.keys().size() == 4 &&
+             data.name is string && data.name.size() <= 200 &&
+             data.role is string && data.role.size() <= 200 &&
+             data.text is string && data.text.size() <= 1000 &&
+             data.rating is number && data.rating >= 0 && data.rating <= 5;
+    }
+
+    function isValidMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'createdAt']) &&
+             data.keys().size() == 4 &&
+             data.name is string && data.name.size() <= 200 &&
+             data.email is string && data.email.size() <= 200 &&
+             data.message is string && data.message.size() <= 2000 &&
+             data.createdAt == request.time;
+    }
+
+    function isValidClient(data) {
+      return data.keys().hasAll(['name', 'createdAt']) &&
+             data.name is string && data.name.size() <= 200 &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 200)) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 50)) &&
+             (!('company' in data) || (data.company is string && data.company.size() <= 200)) &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 5000)) &&
+             data.createdAt == request.time;
+    }
+
+    // Collection Rules
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidProject(request.resource.data) && isValidId(projectId);
+      allow update: if isAdmin() && isValidProject(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /services/{serviceId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidService(request.resource.data) && isValidId(serviceId);
+      allow update: if isAdmin() && isValidService(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidTestimonial(request.resource.data) && isValidId(testimonialId);
+      allow update: if isAdmin() && isValidTestimonial(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /messages/{messageId} {
+      allow read: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidMessage(request.resource.data) && isValidId(messageId);
+      allow update, delete: if isAdmin();
+    }
+
+    match /clients/{clientId} {
+      allow read: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isAdmin() && isValidClient(request.resource.data) && isValidId(clientId);
+      allow update: if isAdmin() && isValidClient(request.resource.data);
+      allow delete: if isAdmin();
+    }
+  }
+}

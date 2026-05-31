@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Portfolio project entry",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Project title" },
+        "category": { "type": "string", "description": "Project category" },
+        "image": { "type": "string", "description": "URL of the project image" },
+        "desc": { "type": "string", "description": "Short description" },
+        "url": { "type": "string", "description": "Link to the live project" },
+        "features": { "type": "string", "description": "Comma separated features" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "category", "image", "desc", "url", "features"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Service offered by the agency",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "desc": { "type": "string" },
+        "iconName": { "type": "string", "description": "Name of the lucide icon" }
+      },
+      "required": ["title", "desc", "iconName"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Customer feedback",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "text": { "type": "string" },
+        "rating": { "type": "number" }
+      },
+      "required": ["name", "role", "text", "rating"]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "description": "Message sent via contact form",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    },
+    "Client": {
+      "title": "Client",
+      "description": "Customer registry entry",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "company": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Collection of portfolio projects"
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Collection of services"
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": "Testimonial",
+      "description": "Collection of testimonials"
+    },
+    "/messages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Collection of contact messages"
+    },
+    "/clients/{clientId}": {
+      "schema": "Client",
+      "description": "Collection of clients"
+    }
+  }
+}

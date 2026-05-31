@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { FirebaseProvider, useFirebase } from "./components/FirebaseProvider";
 import { 
   Code2, 
   Cloud, 
@@ -18,7 +20,12 @@ import {
   X,
   ExternalLink,
   Star,
-  Quote
+  Quote,
+  Users,
+  UserPlus,
+  Plus,
+  Trash2,
+  Edit
 } from "lucide-react";
 
 const Logo = ({ className = "" }: { className?: string }) => (
@@ -498,13 +505,13 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em Limeira/SP, sou casado com a Nicolly e pai.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 29 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
               </p>
               <p>
-                Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. desde os meus 16 anos, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
+                Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
               </p>
               <p>
-                Atualmente, estou aprimorando minha base técnica cursando <strong>Análise e Desenvolvimento de Sistemas</strong>. Na Stahl Tech & Web, uno minha dedicação e expertise acumulada para entregar desde suportes confiáveis em hardwares até sites desenvolvidos com altíssima precisão e performance.
+                Atualmente, estou aprimorando minha base técnica cursando <strong>Análise e Desenvolvimento de Sistemas</strong>. Na Stahl Tech Web, uno minha dedicação e expertise acumulada para entregar desde suportes confiáveis em hardwares até sites desenvolvidos com altíssima precisão e performance.
               </p>
             </div>
             
@@ -512,7 +519,7 @@ const About = () => {
               {[
                 "13+ Anos de T.I.",
                 "Graduando ADS",
-                "Limeira/SP",
+                "Limeira - SP",
                 "Foco em Resultado"
               ].map((item, i) => (
                 <div 
@@ -539,18 +546,18 @@ const About = () => {
           >
             <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Nossa Equipe</div>
             <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
-              Nicolly <br/>Lopes Stahl
+              Nicolly Regina<br/>Lopes da Silva
             </h2>
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou a Nicolly. Tenho 24 anos e uma paixão imensa por cuidar de pessoas e organizar processos. Sou formada em <strong>Administração</strong>, o que me deu uma visão muito ampla sobre gestão, organização e negócio.
+                Olá! Sou a Nicolly. Tenho 25 anos e uma paixão imensa por cuidar de pessoas e organizar processos. Sou formada em <strong>Administração</strong>, o que me deu uma visão muito ampla sobre gestão e organização.
               </p>
               <p>
-                Atualmente, estou cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
+                Atualmente, estou seguindo meu coração e cursando <strong>Fonoaudiologia</strong>, unindo minha habilidade administrativa com o cuidado e desenvolvimento humano.
               </p>
               <p>
-                Trabalho ao lado do Bryan, somando forças para garantir que o atendimento, o planejamento e os bastidores dos nossos projetos na Stahl Tech & Web sejam impecáveis e funcionem perfeitamente.
+                Trabalho ao lado do Bryan (que também é meu marido!), somando forças para garantir que o atendimento, o planejamento e os bastidores dos nossos projetos na Stahl Tech & Web sejam impecáveis e funcionem perfeitamente.
               </p>
             </div>
             
@@ -612,8 +619,19 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    try {
+      await addDoc(collection(db, "messages"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
+      // Optionally show a success state or just proceed with mailto
+    } catch (error) {
+      console.error("Error saving message:", error);
+    }
+
     const subject = encodeURIComponent(`Contato Comercial - Stahl Tech (De: ${formData.nome})`);
     const body = encodeURIComponent(`Nome: ${formData.nome}\nEmail: ${formData.email}\n\nMensagem:\n${formData.mensagem}`);
     window.location.href = `mailto:stahltechweb@gmail.com?subject=${subject}&body=${body}`;
@@ -640,7 +658,7 @@ const Contact = () => {
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">WhatsApp</span>
-                <a href="https://wa.link/2oxrwv" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 99774-4518</a>
+                <a href="https://wa.link/0cy014" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold hover:text-stahl-cyan transition-colors">(19) 98441-1208</a>
               </div>
               <div className="flex flex-col">
                 <span className="micro-label mb-2">Localização</span>
@@ -706,6 +724,10 @@ const Footer = () => (
         <p className="text-[10px] uppercase tracking-[0.2em] font-bold">
           © {new Date().getFullYear()} Stahl Tech & Web. All rights reserved.
         </p>
+
+        <a href="/admin" className="text-[10px] uppercase tracking-[0.2em] font-bold hover:text-white transition-colors">
+          Admin
+        </a>
       </div>
     </div>
   </footer>
@@ -739,8 +761,18 @@ const BudgetModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "budgets"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
+    } catch (error) {
+      console.error("Error saving budget request:", error);
+    }
+
     const text = `*Solicitação de Orçamento - Stahl Tech*\n\n` +
       `*Nome:* ${formData.nome}\n` +
       `*Telefone:* ${formData.telefone}\n` +
@@ -751,7 +783,7 @@ const BudgetModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
       `*Mensagem:* ${formData.mensagem}`;
     
     const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/5519997744518?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/5519984411208?text=${encodedText}`, "_blank");
   };
 
   return (
@@ -838,11 +870,11 @@ const BudgetModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
   );
 };
 
-export default function App() {
+const MainLayout = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen font-sans">
+    <div className="bg-stahl-dark min-h-screen text-white selection:bg-stahl-cyan selection:text-stahl-dark scroll-smooth">
       <Navbar />
       <main>
         <Hero onOpenForm={() => setIsModalOpen(true)} />
@@ -856,4 +888,553 @@ export default function App() {
       <BudgetModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
+};
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <FirebaseProvider>
+        <Routes>
+          <Route path="/" element={<MainLayout />} />
+          <Route path="/admin" element={<AdminPage />} />
+        </Routes>
+      </FirebaseProvider>
+    </BrowserRouter>
+  );
 }
+
+const AdminPage = () => {
+  const { user, loading, isAdmin } = useFirebase();
+  const navigate = useNavigate();
+
+  if (loading) return <div className="h-screen w-full flex items-center justify-center bg-stahl-dark text-white">Carregando...</div>;
+
+  if (!user) {
+    return <AdminLogin />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-stahl-dark text-white p-6">
+        <h1 className="text-4xl font-black mb-4">ACESSO NEGADO</h1>
+        <p className="text-white/60 mb-8">Esta área é restrita para o administrador.</p>
+        <button onClick={() => navigate("/")} className="btn-bold px-8">Voltar para Início</button>
+      </div>
+    );
+  }
+
+  return <AdminDashboard />;
+};
+
+import { GoogleAuthProvider, signInWithPopup, signOut, browserPopupRedirectResolver, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db, handleFirestoreError, OperationType } from "./lib/firebase";
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
+
+const AdminLogin = () => {
+  const [errorStatus, setErrorStatus] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [email, setEmail] = useState("stahltechweb@gmail.com");
+  const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [useEmailAuth, setUseEmailAuth] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setErrorStatus(null);
+    setErrorMessage(null);
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider, browserPopupRedirectResolver);
+    } catch (error: any) {
+      console.error("Login failed", error);
+      setErrorStatus(error.code || "unknown_error");
+    }
+  };
+
+  const handleEmailAuthSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorStatus(null);
+    setErrorMessage(null);
+
+    if (email.trim().toLowerCase() !== "stahltechweb@gmail.com") {
+      setErrorMessage("Somente o e-mail stahltechweb@gmail.com possui acesso à área administrativa.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrorMessage("A senha precisa ter no mínimo 6 caracteres.");
+      return;
+    }
+
+    try {
+      if (isSignUp) {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+    } catch (error: any) {
+      console.error("Email auth failed", error);
+      if (error.code === 'auth/operation-not-allowed') {
+        setErrorMessage("O provedor de E-mail/Senha não está ativado no Console do Firebase. Ative-o em Authentication > Sign-in method.");
+      } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+        setErrorMessage("E-mail ou senha incorretos. Se for o primeiro acesso, selecione 'Cadastrar Usuário Admin' abaixo.");
+      } else if (error.code === 'auth/email-already-in-use') {
+        setErrorMessage("Este e-mail administrativo já está cadastrado. Tente entrar com sua senha.");
+      } else {
+        setErrorMessage(error.message || "Ocorreu um erro ao autenticar.");
+      }
+    }
+  };
+
+  return (
+    <div className="h-screen w-full flex flex-col items-center justify-center bg-stahl-dark text-white p-6 overflow-y-auto">
+      <div className="w-full max-w-md bg-white/5 p-8 border border-white/10 rounded-sm">
+        <div className="flex justify-center mb-8">
+          <Logo />
+        </div>
+        
+        <h1 className="text-3xl font-black mb-6 uppercase tracking-tighter text-center">Área Administrativa</h1>
+        
+        {errorStatus && (
+          <div className="bg-red-500/10 border border-red-500/50 p-4 mb-6 text-center rounded-sm">
+            <p className="text-red-500 font-bold mb-2 uppercase text-xs tracking-widest">Erro de Conexão</p>
+            <p className="text-xs text-white/70 leading-relaxed">
+              {errorStatus === 'auth/network-request-failed' 
+                ? "O navegador bloqueou popups/cookies de login no iframe. Use o formulário de E-mail/Senha abaixo ou abra o site em uma NOVA ABA." 
+                : `O Google retornou o seguinte erro: ${errorStatus}. Recomendamos usar o Login com E-mail/Senha abaixo.`}
+            </p>
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="bg-red-500/10 border border-red-500/50 p-4 mb-6 text-center rounded-sm">
+            <p className="text-red-500 font-bold mb-1 uppercase text-xs tracking-widest">Alerta</p>
+            <p className="text-xs text-white/75 leading-relaxed">{errorMessage}</p>
+          </div>
+        )}
+
+        {!useEmailAuth ? (
+          <div className="space-y-4">
+            <button onClick={handleGoogleLogin} className="btn-bold w-full flex items-center justify-center gap-4 py-4">
+              Entrar com Google
+            </button>
+            <button 
+              onClick={() => setUseEmailAuth(true)} 
+              className="w-full py-4 text-xs font-bold uppercase tracking-widest text-stahl-cyan hover:text-white transition-colors border border-white/10 hover:border-stahl-cyan/50"
+            >
+              Entrar com E-mail e Senha (Alt)
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleEmailAuthSubmit} className="space-y-5">
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-white/40 mb-2 block">E-mail de Admin</label>
+              <input 
+                required
+                type="email"
+                disabled
+                className="w-full bg-white/5 border border-white/10 p-3 rounded-sm text-sm text-white/60 font-mono outline-none cursor-not-allowed"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-white/40 mb-2 block">Senha de Acesso</label>
+              <input 
+                required
+                type="password"
+                placeholder="Insira a senha de 6+ caracteres"
+                className="w-full bg-white/10 border border-white/25 p-3 rounded-sm text-sm text-white outline-none focus:border-stahl-cyan/50 transition-colors"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <button type="submit" className="btn-bold w-full py-4 text-sm uppercase font-black tracking-widest">
+              {isSignUp ? "Confirmar Cadastro Admin" : "Entrar como Admin"}
+            </button>
+
+            <div className="flex justify-between text-[10px] uppercase font-bold tracking-wider pt-2">
+              <button 
+                type="button" 
+                onClick={() => setIsSignUp(!isSignUp)} 
+                className="text-stahl-cyan hover:text-white transition-colors"
+              >
+                {isSignUp ? "Ir para Tela de Entrada" : "Cadastrar Usuário Admin"}
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setUseEmailAuth(false)} 
+                className="text-white/40 hover:text-white transition-colors"
+              >
+                Usar Google
+              </button>
+            </div>
+          </form>
+        )}
+
+        <div className="mt-8 pt-6 border-t border-white/5 text-center">
+          <p className="text-white/40 text-[9px] uppercase font-bold tracking-widest mb-4 leading-relaxed">
+            Se for o primeiro acesso pelo e-mail e senha, selecione "Cadastrar Usuário Admin" sob o formulário para registrar.
+          </p>
+          <a href="/" className="text-white/40 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold border-b border-white/10 pb-1">Voltar para o site</a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AdminDashboard = () => {
+  const [messages, setMessages] = useState<any[]>([]);
+  const [budgets, setBudgets] = useState<any[]>([]);
+  const [clients, setClients] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<'messages' | 'budgets' | 'clients'>('messages');
+  const [showClientForm, setShowClientForm] = useState(false);
+  const [editingClient, setEditingClient] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const qMessages = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+    const unsubscribeMessages = onSnapshot(qMessages, (snapshot) => {
+      const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setMessages(msgs);
+    }, (error) => {
+      handleFirestoreError(error, OperationType.LIST, "messages");
+    });
+
+    const qBudgets = query(collection(db, "budgets"), orderBy("createdAt", "desc"));
+    const unsubscribeBudgets = onSnapshot(qBudgets, (snapshot) => {
+      const bgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setBudgets(bgs);
+    }, (error) => {
+      handleFirestoreError(error, OperationType.LIST, "budgets");
+    });
+
+    const qClients = query(collection(db, "clients"), orderBy("createdAt", "desc"));
+    const unsubscribeClients = onSnapshot(qClients, (snapshot) => {
+      const cls = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setClients(cls);
+    }, (error) => {
+      handleFirestoreError(error, OperationType.LIST, "clients");
+    });
+
+    return () => {
+      unsubscribeMessages();
+      unsubscribeBudgets();
+      unsubscribeClients();
+    };
+  }, []);
+
+  const handleLogout = () => signOut(auth);
+
+  const handleEditClient = (client: any) => {
+    setEditingClient(client);
+    setShowClientForm(true);
+  };
+
+  const handleDeleteClient = async (id: string) => {
+    if (window.confirm("Deseja realmente excluir este cliente?")) {
+      try {
+        await deleteDoc(doc(db, "clients", id));
+      } catch (error) {
+        console.error("Error deleting client:", error);
+      }
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-12 border-b pb-8 gap-6 text-center md:text-left">
+          <div>
+            <h1 className="text-3xl font-black uppercase tracking-tighter">Dashboard Admin</h1>
+            <p className="text-slate-500">Stahl Tech & Web - Gestão de Contatos</p>
+          </div>
+          <div className="flex gap-4">
+            <button onClick={() => navigate("/")} className="px-4 py-2 text-xs font-bold uppercase border border-slate-300 hover:bg-slate-100 transition-colors">Ver Site</button>
+            <button onClick={handleLogout} className="px-4 py-2 text-xs font-bold uppercase bg-red-600 text-white hover:bg-red-700 transition-colors">Sair</button>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-4 mb-8">
+          <button 
+            onClick={() => setActiveTab('messages')}
+            className={`px-6 py-3 font-black uppercase tracking-tight transition-colors ${activeTab === 'messages' ? 'bg-stahl-cyan text-white' : 'bg-white text-slate-400 hover:bg-slate-100'}`}
+          >
+            Mensagens ({messages.length})
+          </button>
+          <button 
+            onClick={() => setActiveTab('budgets')}
+            className={`px-6 py-3 font-black uppercase tracking-tight transition-colors ${activeTab === 'budgets' ? 'bg-stahl-cyan text-white' : 'bg-white text-slate-400 hover:bg-slate-100'}`}
+          >
+            Orçamentos ({budgets.length})
+          </button>
+          <button 
+            onClick={() => setActiveTab('clients')}
+            className={`px-6 py-3 font-black uppercase tracking-tight transition-colors ${activeTab === 'clients' ? 'bg-stahl-cyan text-white' : 'bg-white text-slate-400 hover:bg-slate-100'}`}
+          >
+            Clientes ({clients.length})
+          </button>
+        </div>
+
+        <div className="bg-white p-8 shadow-sm border border-slate-200">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold flex items-center gap-2 uppercase tracking-tight">
+              {activeTab === 'messages' && <Mail className="w-5 h-5 text-stahl-cyan" />}
+              {activeTab === 'budgets' && <Zap className="w-5 h-5 text-stahl-cyan" />}
+              {activeTab === 'clients' && <Users className="w-5 h-5 text-stahl-cyan" />}
+              
+              {activeTab === 'messages' && 'Mensagens do Site'}
+              {activeTab === 'budgets' && 'Solicitações de Orçamentos'}
+              {activeTab === 'clients' && 'Cadastro de Clientes'}
+            </h2>
+            
+            {activeTab === 'clients' && (
+              <button 
+                onClick={() => setShowClientForm(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-stahl-dark text-white text-xs font-bold uppercase hover:bg-stahl-dark/90 transition-colors"
+              >
+                <Plus className="w-4 h-4" /> Novo Cliente
+              </button>
+            )}
+          </div>
+          
+          {activeTab === 'messages' && (
+            messages.length === 0 ? (
+              <p className="text-slate-400 italic">Nenhuma mensagem recebida ainda.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b text-xs uppercase tracking-wider text-slate-400 font-black">
+                      <th className="pb-4">Data</th>
+                      <th className="pb-4">Nome</th>
+                      <th className="pb-4">E-mail</th>
+                      <th className="pb-4">Mensagem</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {messages.map((msg) => (
+                      <tr key={msg.id} className="text-sm">
+                        <td className="py-4 font-mono text-[10px] whitespace-nowrap pr-4">{msg.createdAt?.toDate?.()?.toLocaleString() || 'Processando...'}</td>
+                        <td className="py-4 font-bold pr-4">{msg.name}</td>
+                        <td className="py-4 text-slate-600 pr-4">{msg.email}</td>
+                        <td className="py-4 text-slate-600">{msg.message}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
+          )}
+
+          {activeTab === 'budgets' && (
+            budgets.length === 0 ? (
+              <p className="text-slate-400 italic">Nenhum orçamento solicitado ainda.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b text-xs uppercase tracking-wider text-slate-400 font-black">
+                      <th className="pb-4">Data</th>
+                      <th className="pb-4">Nome</th>
+                      <th className="pb-4">Serviço</th>
+                      <th className="pb-4">Local</th>
+                      <th className="pb-4">Contato</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {budgets.map((b) => (
+                      <tr key={b.id} className="text-sm">
+                        <td className="py-4 font-mono text-[10px] whitespace-nowrap pr-4">{b.createdAt?.toDate?.()?.toLocaleString() || 'Processando...'}</td>
+                        <td className="py-4 font-bold pr-4">{b.nome}</td>
+                        <td className="py-4 text-stahl-cyan font-black uppercase text-[10px] pr-4">{b.servico}</td>
+                        <td className="py-4 text-slate-600 pr-4">{b.cidade} / {b.cep}</td>
+                        <td className="py-4 text-slate-600">
+                          {b.email}<br/>
+                          <span className="font-bold">{b.telefone}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
+          )}
+
+          {activeTab === 'clients' && (
+            clients.length === 0 ? (
+              <div className="text-center py-20 border-2 border-dashed border-slate-200">
+                <Users className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                <p className="text-slate-400 italic">Nenhum cliente cadastrado.</p>
+                <button 
+                  onClick={() => setShowClientForm(true)}
+                  className="mt-4 text-stahl-cyan font-bold uppercase text-xs"
+                >
+                  Cadastrar Primeiro Cliente
+                </button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b text-xs uppercase tracking-wider text-slate-400 font-black">
+                      <th className="pb-4">Nome / Empresa</th>
+                      <th className="pb-4">E-mail</th>
+                      <th className="pb-4">Telefone</th>
+                      <th className="pb-4 text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {clients.map((client) => (
+                      <tr key={client.id} className="text-sm">
+                        <td className="py-4 pr-4">
+                          <div className="font-bold">{client.name}</div>
+                          {client.company && <div className="text-[10px] uppercase text-slate-400 font-bold">{client.company}</div>}
+                        </td>
+                        <td className="py-4 text-slate-600 pr-4">{client.email || '-'}</td>
+                        <td className="py-4 text-slate-600 pr-4">{client.phone || '-'}</td>
+                        <td className="py-4 text-right">
+                          <div className="flex justify-end gap-2">
+                            <button 
+                              onClick={() => handleEditClient(client)}
+                              className="p-2 text-slate-400 hover:text-stahl-cyan transition-colors"
+                              title="Editar"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button 
+                              onClick={() => handleDeleteClient(client.id)}
+                              className="p-2 text-slate-400 hover:text-red-600 transition-colors"
+                              title="Excluir"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+
+      {/* Client Form Modal */}
+      {showClientForm && (
+        <ClientModal 
+          client={editingClient} 
+          onClose={() => {
+            setShowClientForm(false);
+            setEditingClient(null);
+          }} 
+        />
+      )}
+    </div>
+  );
+};
+
+const ClientModal = ({ client, onClose }: { client?: any, onClose: () => void }) => {
+  const [formData, setFormData] = useState({
+    name: client?.name || "",
+    email: client?.email || "",
+    phone: client?.phone || "",
+    company: client?.company || "",
+    notes: client?.notes || ""
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (client?.id) {
+        await updateDoc(doc(db, "clients", client.id), formData);
+      } else {
+        await addDoc(collection(db, "clients"), {
+          ...formData,
+          createdAt: serverTimestamp()
+        });
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error saving client:", error);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-stahl-dark/80 backdrop-blur-sm">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white w-full max-w-lg p-8 shadow-2xl relative"
+      >
+        <button onClick={onClose} className="absolute top-6 right-6 text-slate-400 hover:text-slate-900">
+          <X className="w-6 h-6" />
+        </button>
+
+        <h2 className="text-2xl font-black uppercase tracking-tighter mb-8 border-b pb-4">
+          {client ? 'Editar Cliente' : 'Novo Cliente'}
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Nome Completo *</label>
+            <input 
+              required
+              type="text"
+              className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors font-bold text-slate-900"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">E-mail</label>
+              <input 
+                type="email"
+                className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Telefone</label>
+              <input 
+                type="text"
+                className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+          </div>
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Empresa</label>
+            <input 
+              type="text"
+              className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900"
+              value={formData.company}
+              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Observações</label>
+            <textarea 
+              className="w-full border-2 border-slate-100 p-3 outline-none focus:border-stahl-cyan transition-colors text-slate-900 h-24 resize-none text-sm"
+              value={formData.notes}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            ></textarea>
+          </div>
+
+          <div className="pt-4 flex gap-4">
+            <button type="submit" className="flex-1 bg-stahl-dark text-white py-4 font-black uppercase tracking-widest text-xs hover:bg-stahl-cyan transition-colors">
+              Salvar Cadastro
+            </button>
+            <button type="button" onClick={onClose} className="px-6 py-4 border-2 border-slate-100 font-black uppercase tracking-widest text-xs hover:bg-slate-50 transition-colors">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
