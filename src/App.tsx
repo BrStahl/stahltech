@@ -613,7 +613,7 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 30 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 30 anos, resido em <strong>Limeira - SP</strong>, sou casado com a Nicolly e pai.
               </p>
               <p>
                 Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
@@ -654,7 +654,7 @@ const About = () => {
           >
             <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Nossa Equipe</div>
             <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
-              Nicolly Regina<br/>Lopes da Silva
+              Nicolly <br/>Lopes Stahl
             </h2>
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
