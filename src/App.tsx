@@ -1478,7 +1478,7 @@ const AdminDashboard = () => {
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'proposals', label: 'Prospecção', icon: Target },
-            { id: 'serviceOrders', label: 'Controles', icon: CheckSquare },
+            { id: 'serviceOrders', label: 'Projetos', icon: CheckSquare },
             { id: 'clients', label: 'Clientes', icon: Users },
             { id: 'domains', label: 'Domínios', icon: Globe },
             { id: 'budgets', label: 'Orçamentos', icon: Zap },
@@ -1558,7 +1558,7 @@ const AdminDashboard = () => {
               {activeTab === 'projects' && 'Portfólio & Projetos'}
               {activeTab === 'clients' && 'Cadastro de Clientes'}
               {activeTab === 'domains' && 'Controle de Domínios'}
-              {activeTab === 'serviceOrders' && 'Controle de Serviços'}
+              {activeTab === 'serviceOrders' && 'Projetos'}
               {activeTab === 'proposals' && 'Prospecção (Propostas)'}
             </h2>
             
