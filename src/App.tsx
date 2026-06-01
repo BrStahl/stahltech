@@ -1470,7 +1470,7 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col fixed h-full z-10 hidden md:flex">
         <div className="p-6 border-b border-slate-200">
-          <h1 className="text-xl font-black uppercase tracking-tighter text-stahl-dark">Admin UI</h1>
+          <h1 className="text-xl font-black uppercase tracking-tighter text-stahl-dark">Painel Admin</h1>
           <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Stahl Tech & Web</p>
         </div>
         
