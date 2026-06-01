@@ -1531,7 +1531,7 @@ const AdminDashboard = () => {
             >
               <option value="dashboard">Dashboard</option>
               <option value="proposals">Prospecção</option>
-              <option value="serviceOrders">Controles de Serviço</option>
+              <option value="serviceOrders">Projetos</option>
               <option value="clients">Clientes</option>
               <option value="domains">Domínios</option>
               <option value="budgets">Orçamentos</option>
