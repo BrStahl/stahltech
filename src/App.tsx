@@ -40,7 +40,8 @@ import {
   AlertCircle,
   Search,
   PhoneCall,
-  DollarSign
+  DollarSign,
+  Wrench
 } from "lucide-react";
 import { AreaChart, Area, PieChart, Pie, Cell, Legend, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -143,41 +144,105 @@ const Navbar = () => {
 };
 
 const Hero = ({ onOpenForm }: { onOpenForm: () => void }) => (
-  <section className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden tech-grid">
-    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full">
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="micro-label mb-8">Seus Parceiros Digitais</div>
-        <h1 className="massive-heading mb-10">
-          O FUTURO<br />
-          <span className="text-stahl-cyan">É DIGITAL</span>
-        </h1>
-        <p className="max-w-xl text-xl text-white/60 mb-12 leading-relaxed">
-          Criamos experiências digitais impactantes que elevam sua marca ao próximo nível através de design estratégico e tecnologia de ponta.
-        </p>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-10">
-          <button onClick={onOpenForm} className="btn-bold">
-            Solicitar orçamento
-          </button>
-          <a href="#servicos" className="link-bold text-white">
-            Ver Serviços
-          </a>
-        </div>
-      </motion.div>
+  <section className="relative min-h-screen flex flex-col justify-center pt-24 overflow-hidden tech-grid">
+    {/* Ambient Glows */}
+    <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-stahl-cyan/10 rounded-full blur-[120px] pointer-events-none animate-pulse duration-[8000ms]" />
+    <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none" />
+    
+    <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="lg:col-span-7">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-8">
+            <span className="w-2 h-2 rounded-full bg-stahl-cyan animate-ping" />
+            <span className="text-[12px] uppercase tracking-[0.15em] font-medium text-white/80">Seus Parceiros Digitais de Alta Performance</span>
+          </div>
+
+          <h1 className="massive-heading mb-10 text-white font-extrabold leading-[0.95]">
+            O FUTURO<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-stahl-cyan via-blue-400 to-indigo-400">É DIGITAL</span>
+          </h1>
+          
+          <p className="max-w-xl text-xl text-white/70 mb-12 leading-relaxed">
+            Criamos experiências digitais impactantes e ultravelozes que elevam sua marca ao próximo nível, combinando design estratégico e tecnologia de ponta.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-8">
+            <button 
+              onClick={onOpenForm} 
+              className="px-10 py-5 bg-gradient-to-r from-stahl-cyan to-blue-600 text-white font-black uppercase tracking-wider hover:from-white hover:to-white hover:text-stahl-dark transition-all duration-300 shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-none relative group overflow-hidden"
+            >
+              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+              Quero um site assim
+            </button>
+            <a href="#servicos" className="link-bold text-white text-center py-3 sm:py-0">
+              Ver Serviços
+            </a>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Hero Visual Accent for Desktop */}
+      <div className="hidden lg:block lg:col-span-5 relative">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="border border-white/10 bg-white/5 p-8 relative overflow-hidden group shadow-2xl backdrop-blur-md"
+        >
+          {/* Diagonal laser line */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-stahl-cyan to-transparent animate-[pulse_3s_infinite]" />
+          
+          <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+            <div className="flex gap-2">
+              <span className="w-3 h-3 rounded-full bg-red-500/40" />
+              <span className="w-3 h-3 rounded-full bg-yellow-500/40" />
+              <span className="w-3 h-3 rounded-full bg-green-500/40" />
+            </div>
+            <span className="font-mono text-[10px] text-white/40">STAHL_TECH_SYSTEM // LIVE</span>
+          </div>
+
+          <div className="space-y-6 font-mono text-xs text-white/60">
+            <div>
+              <span className="text-stahl-cyan font-bold">&gt;_ const</span> <span className="text-white">stahlTech</span> = {"{"}
+              <div className="pl-4">
+                speed: <span className="text-emerald-400">"100/100"</span>,<br />
+                UX: <span className="text-emerald-400">"Premium"</span>,<br />
+                conversion: <span className="text-emerald-400">"Focada em Vendas"</span>,<br />
+                reliability: <span className="text-emerald-400">"100%"</span>
+              </div>
+              {"}"};
+            </div>
+
+            <div className="border-t border-white/5 pt-6">
+              <p className="text-[10px] text-white/30 uppercase tracking-widest mb-2">Monitor de Status</p>
+              <div className="flex justify-between text-[11px]">
+                <span>Tempo de Resposta:</span>
+                <span className="text-emerald-400 font-bold">12ms (Excelente)</span>
+              </div>
+              <div className="flex justify-between text-[11px] mt-1">
+                <span>SSL & URL Amigáveis:</span>
+                <span className="text-emerald-400 font-bold">Ativados</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
     
-    {/* Decorative Elements */}
-    <div className="absolute bottom-0 right-0 p-12 hidden lg:block">
+    {/* Decorative Elements Footer */}
+    <div className="absolute bottom-0 right-0 p-12 hidden lg:block z-10">
       <div className="flex gap-20 border-t border-white/10 pt-10">
         <div className="flex flex-col">
-          <span className="text-3xl font-black">10+</span>
-          <span className="micro-label">Projetos</span>
+          <span className="text-3xl font-black text-white">10+</span>
+          <span className="micro-label">Projetos Ativos</span>
         </div>
         <div className="flex flex-col">
-          <span className="text-3xl font-black">SEG-SÁB</span>
+          <span className="text-3xl font-black text-white">SEG-SÁB</span>
           <span className="micro-label">Até as 22h</span>
         </div>
       </div>
@@ -218,16 +283,16 @@ const Services = () => {
           <h2 className="text-5xl font-black uppercase tracking-tighter">O Que Fazemos</h2>
         </motion.div>
         
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+        <div 
           className="grid grid-cols-1 md:grid-cols-3 gap-1px bg-white/10 border border-white/10"
         >
           {services.map((s, i) => (
-            <div
+            <motion.div
               key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: i * 0.15 }}
               className="p-12 bg-stahl-dark hover:bg-white/5 transition-colors group"
             >
               <div className="text-stahl-cyan mb-8 group-hover:scale-110 transition-transform duration-500">
@@ -237,9 +302,9 @@ const Services = () => {
               <p className="text-white/60 leading-relaxed">
                 {s.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -613,7 +678,7 @@ const About = () => {
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
               <p>
-                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 30 anos, resido em <strong>Limeira - SP</strong>, sou casado com a Nicolly e pai.
+                Olá! Sou apaixonado por resolver problemas através da tecnologia. Aos 30 anos, resido em <strong>Limeira - SP</strong>, sou casado com a maravilhosa Nicolly e pai.
               </p>
               <p>
                 Minha jornada na tecnologia começou cedo. Trabalho na área de T.I. <strong>desde os meus 16 anos</strong>, acumulando vasta experiência prática em manutenção de infraestruturas, resolução de demandas técnicas desafiadoras e na criação de soluções digitais.
@@ -654,7 +719,7 @@ const About = () => {
           >
             <div className="text-[12px] uppercase tracking-[0.15em] font-bold text-stahl-cyan mb-6">Nossa Equipe</div>
             <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
-              Nicolly <br/>Lopes Stahl
+              Nicolly<br/>Lopes Stahl
             </h2>
             
             <div className="text-lg text-slate-600 mb-10 leading-relaxed space-y-5">
@@ -697,7 +762,7 @@ const About = () => {
              <div className="aspect-[4/5] bg-gray-200 overflow-hidden shadow-2xl relative border-8 border-white">
                 <img 
                   src="/nicolly.jpg"
-                  alt="Nicolly Regina Lopes da Silva"
+                  alt="Nicolly Lopes Stahl"
                   className="w-full h-full object-cover filter contrast-125"
                   referrerPolicy="no-referrer"
                   onError={(e) => {
@@ -776,6 +841,7 @@ const Contact = () => {
     email: "",
     mensagem: ""
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -787,17 +853,28 @@ const Contact = () => {
     
     try {
       await addDoc(collection(db, "messages"), {
-        ...formData,
+        name: formData.nome,
+        nome: formData.nome,
+        email: formData.email,
+        message: formData.mensagem,
+        mensagem: formData.mensagem,
         createdAt: serverTimestamp(),
       });
-      // Optionally show a success state or just proceed with mailto
+      setIsSubmitted(true);
+      const originalData = { ...formData };
+      setFormData({
+        nome: "",
+        email: "",
+        mensagem: ""
+      });
+
+      // Se não estiver em iframe ou para complementar o envio por email
+      const subject = encodeURIComponent(`Contato Comercial - Stahl Tech (De: ${originalData.nome})`);
+      const body = encodeURIComponent(`Nome: ${originalData.nome}\nEmail: ${originalData.email}\n\nMensagem:\n${originalData.mensagem}`);
+      window.location.href = `mailto:stahltechweb@gmail.com?subject=${subject}&body=${body}`;
     } catch (error) {
       console.error("Error saving message:", error);
     }
-
-    const subject = encodeURIComponent(`Contato Comercial - Stahl Tech (De: ${formData.nome})`);
-    const body = encodeURIComponent(`Nome: ${formData.nome}\nEmail: ${formData.email}\n\nMensagem:\n${formData.mensagem}`);
-    window.location.href = `mailto:stahltechweb@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -831,46 +908,68 @@ const Contact = () => {
           </div>
           
           <div className="bg-white/5 p-12 border border-white/10">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="border-b border-white/20 pb-2">
-                <label className="micro-label block mb-2">Nome</label>
-                <input 
-                  required
-                  name="nome"
-                  value={formData.nome}
-                  onChange={handleChange}
-                  type="text" 
-                  className="w-full bg-transparent text-xl font-bold outline-none placeholder:text-white/20 text-white" 
-                  placeholder="Seu nome" 
-                />
-              </div>
-              <div className="border-b border-white/20 pb-2">
-                <label className="micro-label block mb-2">E-mail</label>
-                <input 
-                  required
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  type="email" 
-                  className="w-full bg-transparent text-xl font-bold outline-none placeholder:text-white/20 text-white" 
-                  placeholder="seu@email.com" 
-                />
-              </div>
-              <div className="border-b border-white/20 pb-2">
-                <label className="micro-label block mb-2">Mensagem</label>
-                <textarea 
-                  required
-                  name="mensagem"
-                  value={formData.mensagem}
-                  onChange={handleChange}
-                  className="w-full bg-transparent text-xl font-bold outline-none placeholder:text-white/20 h-32 resize-none text-white" 
-                  placeholder="Como podemos ajudar?"
-                ></textarea>
-              </div>
-              <button type="submit" className="btn-bold w-full">
-                Enviar Mensagem
-              </button>
-            </form>
+            {isSubmitted ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-8"
+              >
+                <div className="w-16 h-16 bg-stahl-cyan/10 border border-stahl-cyan rounded-full flex items-center justify-center mx-auto mb-6 text-stahl-cyan">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-2">Mensagem Enviada!</h3>
+                <p className="text-slate-300 text-sm mb-6 max-w-sm mx-auto">
+                  Sua mensagem foi registrada em nosso painel com sucesso e o cliente de e-mail foi acionado. Responderemos em breve!
+                </p>
+                <button 
+                  onClick={() => setIsSubmitted(false)}
+                  className="px-6 py-3 border border-white/25 text-white text-xs font-bold uppercase hover:bg-white/5 transition-colors"
+                >
+                  Enviar Outra Mensagem
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="border-b border-white/20 pb-2">
+                  <label className="micro-label block mb-2">Nome</label>
+                  <input 
+                    required
+                    name="nome"
+                    value={formData.nome}
+                    onChange={handleChange}
+                    type="text" 
+                    className="w-full bg-transparent text-xl font-bold outline-none placeholder:text-white/20 text-white" 
+                    placeholder="Seu nome" 
+                  />
+                </div>
+                <div className="border-b border-white/20 pb-2">
+                  <label className="micro-label block mb-2">E-mail</label>
+                  <input 
+                    required
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    type="email" 
+                    className="w-full bg-transparent text-xl font-bold outline-none placeholder:text-white/20 text-white" 
+                    placeholder="seu@email.com" 
+                  />
+                </div>
+                <div className="border-b border-white/20 pb-2">
+                  <label className="micro-label block mb-2">Mensagem</label>
+                  <textarea 
+                    required
+                    name="mensagem"
+                    value={formData.mensagem}
+                    onChange={handleChange}
+                    className="w-full bg-transparent text-xl font-bold outline-none placeholder:text-white/20 h-32 resize-none text-white" 
+                    placeholder="Como podemos ajudar?"
+                  ></textarea>
+                </div>
+                <button type="submit" className="btn-bold w-full">
+                  Enviar Mensagem
+                </button>
+              </form>
+            )}
           </div>
         </motion.div>
       </div>
@@ -1266,7 +1365,7 @@ const AdminDashboard = () => {
   const [proposals, setProposals] = useState<any[]>([]);
   const [domains, setDomains] = useState<any[]>([]);
   const [servicesList, setServicesList] = useState<{ id: string, name: string, price?: number, deadlineDays?: number }[]>([]);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'messages' | 'budgets' | 'clients' | 'projects' | 'serviceOrders' | 'proposals' | 'domains'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'messages' | 'budgets' | 'clients' | 'projects' | 'serviceOrders' | 'proposals' | 'domains' | 'services'>('dashboard');
   const [showClientForm, setShowClientForm] = useState(false);
   const [editingClient, setEditingClient] = useState<any>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
@@ -1275,6 +1374,8 @@ const AdminDashboard = () => {
   const [editingOrder, setEditingOrder] = useState<any>(null);
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [editingProposal, setEditingProposal] = useState<any>(null);
+  const [showServiceForm, setShowServiceForm] = useState(false);
+  const [editingService, setEditingService] = useState<any>(null);
   const [showSheetsImport, setShowSheetsImport] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState<{isOpen: boolean, message: string, onConfirm: () => void} | null>(null);
 
@@ -1470,7 +1571,7 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col fixed h-full z-10 hidden md:flex">
         <div className="p-6 border-b border-slate-200">
-          <h1 className="text-xl font-black uppercase tracking-tighter text-stahl-dark">Painel Admin</h1>
+          <h1 className="text-xl font-black uppercase tracking-tighter text-stahl-dark">Admin UI</h1>
           <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Stahl Tech & Web</p>
         </div>
         
@@ -1479,6 +1580,7 @@ const AdminDashboard = () => {
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'proposals', label: 'Prospecção', icon: Target },
             { id: 'serviceOrders', label: 'Projetos', icon: CheckSquare },
+            { id: 'services', label: 'Serviços', icon: Wrench },
             { id: 'clients', label: 'Clientes', icon: Users },
             { id: 'domains', label: 'Domínios', icon: Globe },
             { id: 'budgets', label: 'Orçamentos', icon: Zap },
@@ -1532,6 +1634,7 @@ const AdminDashboard = () => {
               <option value="dashboard">Dashboard</option>
               <option value="proposals">Prospecção</option>
               <option value="serviceOrders">Projetos</option>
+              <option value="services">Serviços</option>
               <option value="clients">Clientes</option>
               <option value="domains">Domínios</option>
               <option value="budgets">Orçamentos</option>
@@ -1551,6 +1654,7 @@ const AdminDashboard = () => {
               {activeTab === 'domains' && <Globe className="w-5 h-5 text-stahl-cyan" />}
               {activeTab === 'serviceOrders' && <CheckSquare className="w-5 h-5 text-stahl-cyan" />}
               {activeTab === 'proposals' && <Target className="w-5 h-5 text-stahl-cyan" />}
+              {activeTab === 'services' && <Wrench className="w-5 h-5 text-stahl-cyan" />}
               
               {activeTab === 'dashboard' && 'Visão Global'}
               {activeTab === 'messages' && 'Mensagens do Site'}
@@ -1560,6 +1664,7 @@ const AdminDashboard = () => {
               {activeTab === 'domains' && 'Controle de Domínios'}
               {activeTab === 'serviceOrders' && 'Projetos'}
               {activeTab === 'proposals' && 'Prospecção (Propostas)'}
+              {activeTab === 'services' && 'Cadastro de Serviços'}
             </h2>
             
             {activeTab === 'clients' && (
@@ -1568,6 +1673,18 @@ const AdminDashboard = () => {
                 className="flex items-center gap-2 px-4 py-2 bg-stahl-dark text-white text-xs font-bold uppercase hover:bg-stahl-dark/90 transition-colors"
               >
                 <Plus className="w-4 h-4" /> Novo Cliente
+              </button>
+            )}
+
+            {activeTab === 'services' && (
+              <button 
+                onClick={() => {
+                  setEditingService(null);
+                  setShowServiceForm(true);
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-stahl-dark text-white text-xs font-bold uppercase hover:bg-stahl-dark/90 transition-colors"
+              >
+                <Plus className="w-4 h-4" /> Novo Serviço
               </button>
             )}
 
@@ -1623,7 +1740,7 @@ const AdminDashboard = () => {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
                   <div className="bg-slate-50 p-4 border border-slate-100 rounded-sm">
                     <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Proj. Andamento</p>
                     <p className="text-xl font-black text-stahl-cyan">
@@ -1674,6 +1791,12 @@ const AdminDashboard = () => {
                         const st = (p.status || '').toLowerCase();
                         return st === 'entrar em contato' || st === 'chamar outra hora';
                       }).length}
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 p-4 border border-slate-100 rounded-sm">
+                    <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Mensagens do Site</p>
+                    <p className="text-xl font-black text-violet-600">
+                      {messages.length}
                     </p>
                   </div>
                 </div>
@@ -1727,9 +1850,9 @@ const AdminDashboard = () => {
                     {messages.map((msg) => (
                       <tr key={msg.id} className="text-sm">
                         <td className="py-4 font-mono text-[10px] whitespace-nowrap pr-4">{msg.createdAt?.toDate?.()?.toLocaleString() || 'Processando...'}</td>
-                        <td className="py-4 font-bold pr-4">{msg.name}</td>
+                        <td className="py-4 font-bold pr-4">{msg.name || msg.nome || 'Sem Nome'}</td>
                         <td className="py-4 text-slate-600 pr-4">{msg.email}</td>
-                        <td className="py-4 text-slate-600">{msg.message}</td>
+                        <td className="py-4 text-slate-600">{msg.message || msg.mensagem || 'Sem Mensagem'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -2138,6 +2261,101 @@ const AdminDashboard = () => {
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'services' && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-black text-sm uppercase tracking-widest text-[#000]">Tabela de Valores de Serviços</h3>
+                <button 
+                  onClick={async () => {
+                    setConfirmDialog({
+                      isOpen: true,
+                      message: "Deseja realmente limpar/excluir toda a tabela de serviços cadastrados?",
+                      onConfirm: async () => {
+                        const promises = servicesList.map(srv => deleteDoc(doc(db, "services", srv.id)));
+                        await Promise.all(promises);
+                        setConfirmDialog(null);
+                      }
+                    });
+                  }}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-xs font-bold uppercase transition-colors"
+                >
+                  Limpar Tabela
+                </button>
+              </div>
+              {servicesList.length === 0 ? (
+                <div className="text-center py-20 border-2 border-dashed border-slate-200">
+                  <Wrench className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                  <p className="text-slate-400 italic">Nenhum serviço disponível. Cadastre um novo ou faça a importação da tabela de preços.</p>
+                  <button 
+                    onClick={() => {
+                      setEditingService(null);
+                      setShowServiceForm(true);
+                    }}
+                    className="mt-4 text-stahl-cyan font-bold uppercase text-xs"
+                  >
+                    Cadastrar Novo Serviço
+                  </button>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="border-b text-xs uppercase tracking-wider text-slate-400 font-black">
+                        <th className="pb-4">Nome do Serviço</th>
+                        <th className="pb-4">Valor Padrão</th>
+                        <th className="pb-4">Prazo Real (Dias)</th>
+                        <th className="pb-4 text-right">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {servicesList.map((srv) => (
+                        <tr key={srv.id} className="border-b border-slate-100/50 hover:bg-slate-50 transition-colors text-sm">
+                          <td className="py-4 font-bold">{srv.name}</td>
+                          <td className="py-4 font-mono font-medium">
+                            {typeof srv.price === 'number' 
+                              ? srv.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) 
+                              : 'R$ 0,00'}
+                          </td>
+                          <td className="py-4 font-medium">{srv.deadlineDays} dias</td>
+                          <td className="py-4 text-right">
+                            <div className="flex justify-end gap-2">
+                              <button 
+                                onClick={() => {
+                                  setEditingService(srv);
+                                  setShowServiceForm(true);
+                                }}
+                                className="p-2 text-slate-400 hover:text-stahl-cyan transition-colors"
+                                title="Editar"
+                              >
+                                <Edit className="w-4 h-4" />
+                              </button>
+                              <button 
+                                onClick={async () => {
+                                  setConfirmDialog({
+                                    isOpen: true,
+                                    message: `Deseja realmente excluir o serviço "${srv.name}"?`,
+                                    onConfirm: async () => {
+                                      await deleteDoc(doc(db, "services", srv.id));
+                                      setConfirmDialog(null);
+                                    }
+                                  });
+                                }}
+                                className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                                title="Excluir"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -2625,6 +2843,17 @@ const AdminDashboard = () => {
         />
       )}
 
+      {/* Service Form Modal */}
+      {showServiceForm && (
+        <ServiceModal 
+          service={editingService} 
+          onClose={() => {
+            setShowServiceForm(false);
+            setEditingService(null);
+          }} 
+        />
+      )}
+
       {/* Confirm Dialog */}
       {confirmDialog?.isOpen && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-stahl-dark/80 backdrop-blur-sm">
@@ -2800,6 +3029,106 @@ const ProposalModal = ({ proposal, servicesList, onClose }: { proposal?: any, se
           <div className="pt-6 flex gap-4">
             <button type="submit" className="flex-1 bg-stahl-cyan text-white py-4 font-black uppercase tracking-widest text-xs hover:bg-stahl-dark transition-colors">
               Salvar Prospecção
+            </button>
+            <button type="button" onClick={onClose} className="px-6 py-4 border-2 border-slate-100 font-black uppercase tracking-widest text-xs hover:bg-slate-50 transition-colors">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
+const ServiceModal = ({ service, onClose }: { service?: any, onClose: () => void }) => {
+  const [formData, setFormData] = useState({
+    name: service?.name || "",
+    price: service?.price !== undefined ? String(service.price) : "",
+    deadlineDays: service?.deadlineDays !== undefined ? String(service.deadlineDays) : ""
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const priceNum = parseFloat(formData.price) || 0;
+      const deadlineNum = parseInt(formData.deadlineDays, 10) || 0;
+      
+      const payload = {
+        name: formData.name,
+        price: priceNum,
+        deadlineDays: deadlineNum
+      };
+
+      if (service?.id) {
+        await updateDoc(doc(db, "services", service.id), payload);
+      } else {
+        await addDoc(collection(db, "services"), {
+          ...payload,
+          createdAt: serverTimestamp()
+        });
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error saving service:", error);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-stahl-dark/80 backdrop-blur-sm">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white w-full max-w-lg p-8 shadow-2xl relative"
+      >
+        <button onClick={onClose} className="absolute top-6 right-6 text-slate-400 hover:text-slate-900">
+          <X className="w-6 h-6" />
+        </button>
+
+        <h2 className="text-2xl font-black uppercase tracking-tighter mb-8 border-b pb-4">
+          {service ? 'Editar Serviço' : 'Novo Serviço'}
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Nome do Serviço *</label>
+            <input 
+              required
+              type="text"
+              placeholder="Ex: Landing Page, Identidade Visual..."
+              className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors font-bold text-slate-900"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Valor do Serviço (R$) *</label>
+              <input 
+                required
+                type="number"
+                step="any"
+                placeholder="Ex: 1500"
+                className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900 font-bold"
+                value={formData.price}
+                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1 block">Prazo de Entrega (Dias) *</label>
+              <input 
+                required
+                type="number"
+                placeholder="Ex: 15"
+                className="w-full border-b-2 border-slate-100 py-2 outline-none focus:border-stahl-cyan transition-colors text-slate-900 font-bold"
+                value={formData.deadlineDays}
+                onChange={(e) => setFormData({ ...formData, deadlineDays: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div className="pt-4 flex gap-4">
+            <button type="submit" className="flex-1 bg-stahl-dark text-white py-4 font-black uppercase tracking-widest text-xs hover:bg-stahl-cyan transition-colors">
+              Salvar Cadastro
             </button>
             <button type="button" onClick={onClose} className="px-6 py-4 border-2 border-slate-100 font-black uppercase tracking-widest text-xs hover:bg-slate-50 transition-colors">
               Cancelar
