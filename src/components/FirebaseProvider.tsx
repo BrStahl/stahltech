@@ -24,7 +24,7 @@ export const FirebaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [loading, setLoading] = useState(true);
   const [connectionError, setConnectionError] = useState<string | null>(null);
 
-  const isAdmin = user?.email === 'stahltechweb@gmail.com';
+  const isAdmin = user?.email?.toLowerCase() === 'stahltechweb@gmail.com' || user?.email?.toLowerCase() === 'jastahl56@gmail.com';
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

@@ -231,14 +231,6 @@ const Services = () => {
 
 const DEFAULT_PROJECTS = [
   {
-    title: "Stahl Tech Web",
-    category: "Web Design",
-    image: "/portfolio-stahl.png",
-    desc: "Site institucional focado em serviços de TI e Web Design com identidate visual de alto impacto.",
-    url: "#",
-    features: "Personalizado, Otimizado, Formulários"
-  },
-  {
     title: "Psicóloga Michele Braz",
     category: "Web Design",
     image: "/portfolio-michele.png",
@@ -453,12 +445,6 @@ const Testimonials = () => {
       name: "Michele Braz",
       role: "Psicóloga",
       text: "O site superou minhas expectativas. Conseguiu transmitir exatamente a serenidade que eu precisava para o meu consultório digital.",
-      rating: 5
-    },
-    {
-      name: "Daniel Lopes",
-      role: "CEO Athom",
-      text: "Performance impecável. Percebemos o aumento nas conversões logo na primeira semana de lançamento da página.",
       rating: 5
     },
     {
@@ -1023,7 +1009,7 @@ const AdminLogin = () => {
   const { connectionError } = useFirebase();
   const [errorStatus, setErrorStatus] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [email, setEmail] = useState("stahltechweb@gmail.com");
+  const [email, setEmail] = useState("jastahl56@gmail.com");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [useEmailAuth, setUseEmailAuth] = useState(false);
@@ -1045,8 +1031,9 @@ const AdminLogin = () => {
     setErrorStatus(null);
     setErrorMessage(null);
 
-    if (email.trim().toLowerCase() !== "stahltechweb@gmail.com") {
-      setErrorMessage("Somente o e-mail stahltechweb@gmail.com possui acesso à área administrativa.");
+    const checkEmail = email.trim().toLowerCase();
+    if (checkEmail !== "stahltechweb@gmail.com" && checkEmail !== "jastahl56@gmail.com") {
+      setErrorMessage("Somente os e-mails stahltechweb@gmail.com ou jastahl56@gmail.com possuem acesso à área administrativa.");
       return;
     }
 
